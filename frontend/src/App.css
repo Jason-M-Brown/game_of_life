@@ -1,0 +1,18 @@
+/* What components look like*/
+
+
+/*default box*/
+.box {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+
+/*box on click*/
+.box-on {
+  background-color: rgb(255, 255, 255);
+}
+.box-off {
+  background-color: rgb(227, 244, 48);
+}
