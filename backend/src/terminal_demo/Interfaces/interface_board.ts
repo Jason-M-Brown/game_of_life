@@ -1,9 +1,3 @@
-export interface Cell {
-    isActive: boolean;
-    symbol: string;
-};
-
-
 export type GameState = {
     height: number
     width: number,

@@ -1,4 +1,4 @@
-import type {GameState} from "./interface_board.js";
+import type {GameState} from "../Interfaces/interface_board.js";
 
 /*
     EFFECT: Checks if {x, y} is an alive cell
