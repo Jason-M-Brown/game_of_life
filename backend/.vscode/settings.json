@@ -1,0 +1,5 @@
+{
+  "mochaExplorer.files": "src/**/*.test.ts",
+  "mochaExplorer.require": ["ts-node/register"],
+  "mochaExplorer.nodeArgv": ["--import=./register-loader.mjs"]
+}

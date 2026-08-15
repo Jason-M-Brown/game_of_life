@@ -1,30 +1,30 @@
-import type {GameState} from "../Interfaces/interface_board.js";
+import type {GameBoard} from "../Interfaces/interface_board.js";
 
 /*
     EFFECT: Checks if {x, y} is an alive cell
 */
-export function getState(currentState: GameState, x: number, y: number): number{
+export function getState(currentState: GameBoard, x: number, y: number): number{
     return currentState.board.has(generateKey(x, y)) ? 1: 0;
 }
 
 /*
     EFFECT: Set's the cell at {x, y} to be alive
 */
-export function setAlive(currentState: GameState, x: number, y: number): void {
+export function setAlive(currentState: GameBoard, x: number, y: number): void {
     currentState.board.add(generateKey(x, y));
 }
 
 /*
     EFFECT: Set's the cell at {x, y} to be dead
 */
-export function setDead(currentState: GameState, x: number, y:number): void {
+export function setDead(currentState: GameBoard, x: number, y:number): void {
     currentState.board.delete(generateKey(x, y));
 }
 
 /*
     EFFECT: Generates the next Effect to display to user 
 */
-export function generateNextState(currentState: GameState) : Set<string> {
+export function generateNextState(currentState: GameBoard) : Set<string> {
     
     const parsedBoard = parseNeighborNodes(currentState);
     return nextGeneration(currentState, parsedBoard);
@@ -40,9 +40,9 @@ export function generateNextState(currentState: GameState) : Set<string> {
     EFFECT: Grabs all nodes that are currently alive and neighbouring nodes,
            then returns the set 
 */
-function parseNeighborNodes(game: GameState) : Set<string> {
+function parseNeighborNodes(game: GameBoard) : Set<string> {
     const parsedNodes = new Set<string>();
-    for (const nextCell of game.board) {
+    for (const nextCell of game.board) {  //To check if there is a bug
         const {x , y} = parseKey(nextCell);
 
         for (let dy = -1; dy <= 1; dy++) {
@@ -66,7 +66,7 @@ function parseNeighborNodes(game: GameState) : Set<string> {
     EFFECT: Check to see if my current node is withing the bounds of the board.
             Return false if I am outside the bounds, true if I am within the bounds
 */
-function insideGameBoard(game: GameState, nextX: number, nextY: number) : boolean {
+function insideGameBoard(game: GameBoard, nextX: number, nextY: number) : boolean {
     if(game.width <= nextX || nextX < 0) {
         return false;
     }
@@ -78,7 +78,7 @@ function insideGameBoard(game: GameState, nextX: number, nextY: number) : boolea
 
 
 /* EFFECT: check all required cells and only return the cells of the alive state. */
-function nextGeneration(game: GameState, parsedBoard: Set<string>) : Set<string> {
+function nextGeneration(game: GameBoard, parsedBoard: Set<string>) : Set<string> {
     const nextGenBoard = new Set<string>;
 
     for(const nextCell of parsedBoard) {
@@ -161,7 +161,7 @@ function lookingAtSelf(dx: number, dy: number): boolean {
 /*  
     EFFECT: Return true if neighbour is currently alive, else false
  */
-function neighborAlive(game: GameState, x:number, y:number) : boolean {
+function neighborAlive(game: GameBoard, x:number, y:number) : boolean {
     return game.board.has(generateKey(x, y))
 }
 
@@ -169,7 +169,7 @@ function neighborAlive(game: GameState, x:number, y:number) : boolean {
     EFFECT: returns false if the cell does not survive based off survival rules, 
             else returns true
 */
-function isSurviving(game: GameState, nextCell: string, count:number) :boolean {
+function isSurviving(game: GameBoard, nextCell: string, count:number) :boolean {
     if(!game.board.has(nextCell)) {
         return false
     }
@@ -185,7 +185,7 @@ function isSurviving(game: GameState, nextCell: string, count:number) :boolean {
     EFFECT: return true if the cell is not currently alive and the cell has 3
     neighbours exactly.
 */
-function isReproducing(game: GameState, nextCell: string, count:number) :boolean {
+function isReproducing(game: GameBoard, nextCell: string, count:number) :boolean {
     if(!game.board.has(nextCell) && count === 3) {
         return true;
     }
