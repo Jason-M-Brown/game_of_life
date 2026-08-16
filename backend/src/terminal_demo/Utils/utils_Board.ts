@@ -185,7 +185,7 @@ function isSurviving(game: GameBoard, nextCell: string, count:number) :boolean {
     EFFECT: return true if the cell is not currently alive and the cell has 3
     neighbours exactly.
 */
-function isReproducing(game: GameBoard, nextCell: string, count:number) :boolean {
+export function isReproducing(game: GameBoard, nextCell: string, count:number) :boolean {
     if(!game.board.has(nextCell) && count === 3) {
         return true;
     }
