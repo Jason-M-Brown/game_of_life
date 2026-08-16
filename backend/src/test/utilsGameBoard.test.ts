@@ -77,7 +77,41 @@ describe("Utils_Board v1", function() {
     isSurviving
     */
 
-    
+    // Cell is alive
+    it("isSurviving: If cell is alive and count equals 1, return false", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 1)).to.equal(false);
+    });
+
+    it("isSurviving: If cell is alive and count equals 2, return true", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 2)).to.equal(true);
+    });
+
+    it("isSurviving: If cell is alive and count equals 3, return true", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 3)).to.equal(true);
+    });
+
+    it("isSurviving: If cell is alive and count equals 4, return false", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 4)).to.equal(false);
+    });
+
+    // Cell is dead
+    it("isSurviving: If cell is alive and count equals 1, return false", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 1)).to.equal(false);
+    });
+
+    it("isSurviving: If cell is alive and count equals 2, return true", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 2)).to.equal(false);
+    });
+
+    it("isSurviving: If cell is alive and count equals 3, return true", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 3)).to.equal(false);
+    });
+
+    it("isSurviving: If cell is alive and count equals 4, return false", async () => {
+        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 4)).to.equal(false);
+    });
+
+
     /*
     isReproducing
     */

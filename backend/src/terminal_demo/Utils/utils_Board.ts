@@ -169,7 +169,7 @@ function neighborAlive(game: GameBoard, x:number, y:number) : boolean {
     EFFECT: returns false if the cell does not survive based off survival rules, 
             else returns true
 */
-function isSurviving(game: GameBoard, nextCell: string, count:number) :boolean {
+export function isSurviving(game: GameBoard, nextCell: string, count:number) :boolean {
     if(!game.board.has(nextCell)) {
         return false
     }
