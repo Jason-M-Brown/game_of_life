@@ -13,6 +13,9 @@ describe("Utils_Board v1", function() {
 
     let gameBoard : GameBoard;
     let gameBoardSizeOne : GameBoard
+    const ALIVECELL = "2,2"
+    const DEADCELL  = `${ALIVECELL} + ${ALIVECELL}`
+    
 
     
     beforeEach(async () => {
@@ -28,7 +31,8 @@ describe("Utils_Board v1", function() {
             board: new Set<string>()
         }
 
-        boardUtils.setAlive(gameBoardSizeOne, 2, 2);
+        const [x_alive, y_alive] = ALIVECELL.split(",").map(Number) as [number, number];
+        boardUtils.setAlive(gameBoardSizeOne, x_alive, y_alive);
     });
 
     afterEach(async () => {});
@@ -36,6 +40,13 @@ describe("Utils_Board v1", function() {
     /*
     it("text", async () => {
 
+    });
+
+
+    describe("", () => {
+        describe("", () => {
+
+        });
     });
     */
 
@@ -59,6 +70,7 @@ describe("Utils_Board v1", function() {
         expect(gameBoard.board.size).to.equal(0);
         boardUtils.setAlive(gameBoard, 1, 1);
         expect(gameBoard.board.size).to.equal(1);
+        //Edge case when Not given a num
     });
 
     /*
@@ -77,66 +89,77 @@ describe("Utils_Board v1", function() {
     isSurviving
     */
 
-    // Cell is alive
-    it("isSurviving: If cell is alive and count equals 1, return false", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 1)).to.equal(false);
-    });
+    describe("isSurviving: ", () => {
+        describe("Cell is Alive", () => {
+            it("Neighbour Count equals 1, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, ALIVECELL, 1)).to.equal(false);
+            });
 
-    it("isSurviving: If cell is alive and count equals 2, return true", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 2)).to.equal(true);
-    });
+            it("Neighbour Count equals 2, return true", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, ALIVECELL, 2)).to.equal(true);
+            });
 
-    it("isSurviving: If cell is alive and count equals 3, return true", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 3)).to.equal(true);
-    });
+            it("Neighbour Count equals 3, return true", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, ALIVECELL, 3)).to.equal(true);
+            });
 
-    it("isSurviving: If cell is alive and count equals 4, return false", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "2,2", 4)).to.equal(false);
-    });
+            it("Neighbour Count equals 4, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, ALIVECELL, 4)).to.equal(false);
+            });
 
-    // Cell is dead
-    it("isSurviving: If cell is alive and count equals 1, return false", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 1)).to.equal(false);
-    });
+        });
+        describe("Cell is Dead", () => {
+            it("Neighbour Count equals 1, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 1)).to.equal(false);
+            });
 
-    it("isSurviving: If cell is alive and count equals 2, return true", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 2)).to.equal(false);
-    });
+            it("Neighbour Count equals 2, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 2)).to.equal(false);
+            });
 
-    it("isSurviving: If cell is alive and count equals 3, return true", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 3)).to.equal(false);
-    });
+            it("Neighbour Count equals 3, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 3)).to.equal(false);
+            });
 
-    it("isSurviving: If cell is alive and count equals 4, return false", async () => {
-        expect(boardUtils.isSurviving(gameBoardSizeOne, "3,2", 4)).to.equal(false);
+            it("Neighbour Count equals 4, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 4)).to.equal(false);
+            });
+        });
     });
-
 
     /*
     isReproducing
     */
-    it("isReproducing: Check if current cell is reproducing: return true (3 neighbours)", async () => {
-        expect(boardUtils.isReproducing(gameBoardSizeOne, "3,3", 3)).to.equal(true);
-    });
 
-    it("isReproducing: Check if current cell is not reproducing: return false (2 neighbours)", async () => {
-        expect(boardUtils.isReproducing(gameBoardSizeOne, "3,3", 2)).to.equal(false);
-    });
+    describe("isReproducing", () => {
 
-    it("isReproducing: Check if current cell is not reproducing: return false (4 neighbours)", async () => {
-        expect(boardUtils.isReproducing(gameBoardSizeOne, "3,3", 4)).to.equal(false);
-    });
+        //Note The only alive Cell in this board set is "2,2"
+        describe("when cell is dead:", () => {
+            it("has 3 neighbours, return true", async () => {
+                expect(boardUtils.isReproducing(gameBoardSizeOne, DEADCELL, 3)).to.equal(true);
+            });
 
-    it("isReproducing: Check if current cell is not reproducing: return false (3 neighbours, but cell alive)", async () => {
-        expect(boardUtils.isReproducing(gameBoardSizeOne, "2,2", 3)).to.equal(false);
-    });
+            it("has 2 neighbours, return false", async () => {
+                expect(boardUtils.isReproducing(gameBoardSizeOne, DEADCELL, 2)).to.equal(false);
+            });
 
-    it("isReproducing: Check if current cell is not reproducing: return false (4 neighbours, but cell alive)", async () => {
-        expect(boardUtils.isReproducing(gameBoardSizeOne, "2,2", 4)).to.equal(false);
-    });
+            it("has 4 neighbours, returnc false", async () => {
+                expect(boardUtils.isReproducing(gameBoardSizeOne, DEADCELL, 4)).to.equal(false);
+            });
+        });
 
-    it("isReproducing: Check if current cell is not reproducing: return false (2 neighbours, but cell alive)", async () => {
-        expect(boardUtils.isReproducing(gameBoardSizeOne, "2,2", 4)).to.equal(false);
+        describe("when cell is alive:", () => {
+            it("has 2 neighbours, return false", async () => {
+                expect(boardUtils.isReproducing(gameBoardSizeOne, ALIVECELL, 2)).to.equal(false);
+            });
+            it("has 3 neighbours, return false", async () => {
+                expect(boardUtils.isReproducing(gameBoardSizeOne, ALIVECELL, 3)).to.equal(false);
+            });
+            it("has 4 neighbours, return false", async () => {
+                expect(boardUtils.isReproducing(gameBoardSizeOne, ALIVECELL, 4)).to.equal(false);
+            });
+
+        });
     });
 
     
