@@ -15,8 +15,9 @@ describe("Utils_Board v1", function() {
     let gameBoardSizeOne : GameBoard
     const ALIVECELL = "2,2"
     const DEADCELL  = `${ALIVECELL} + ${ALIVECELL}`
-    
-
+    const [x_alive, y_alive] = ALIVECELL.split(",").map(Number) as [number, number];
+    const x_dead: number = (x_alive + 3);
+    const y_dead: number = (y_alive + 3);
     
     beforeEach(async () => {
         gameBoard = {
@@ -31,7 +32,6 @@ describe("Utils_Board v1", function() {
             board: new Set<string>()
         }
 
-        const [x_alive, y_alive] = ALIVECELL.split(",").map(Number) as [number, number];
         boardUtils.setAlive(gameBoardSizeOne, x_alive, y_alive);
     });
 
@@ -85,12 +85,92 @@ describe("Utils_Board v1", function() {
     });
 
 
+    /* 
+    lookingAtSelf
+    */
+    describe("lookingAtSelf: ", () => {
+        it("dx =  0 and dy =  0, return true", async () => {
+            expect(boardUtils.lookingAtSelf(0, 0)).to.equal(true);
+        });
+
+        it("dx = -1 and dy =  0, return false" , async () => {
+            expect(boardUtils.lookingAtSelf(-1, 0)).to.equal(false);
+        });
+
+        it("dx =  0 and dy = -1, return false", async () => {
+            expect(boardUtils.lookingAtSelf(0, -1)).to.equal(false);
+        });
+
+        it("dx =  1 and dy =  0, return false", async () => {
+            expect(boardUtils.lookingAtSelf(1, 0)).to.equal(false);
+        });
+
+        it("dx =  0 and dy =  1, return false", async () => {
+            expect(boardUtils.lookingAtSelf(0, 1)).to.equal(false);
+        });
+    });
+
+    /* 
+    neighborAlive 
+    */
+
+    describe("neighborAlive: ", () => {
+        it("Neighbour is inside board set : return true", async () => {
+            expect(boardUtils.neighborAlive(gameBoardSizeOne, x_alive, y_alive)).to.equal(true);
+
+        });
+
+        it("Neighbour is not inside board set : return false", async () => {
+            expect(boardUtils.neighborAlive(gameBoardSizeOne, x_dead, y_dead)).to.equal(false);
+        });
+
+    });
+
+    /*
+    parseKey
+    */
+    describe("parseKey: ", () => {
+        describe("Valid key inputs: ", () => {
+            it(`input "0,0"  returns {0, 0}`, async () => {
+                expect(boardUtils.parseKey("0,0")).to.deep.equal({x: 0, y: 0});
+            });
+        });
+        
+        
+        describe("Invalid Input: ", () => {
+            describe("Input Size Incorrect", () => {
+                it("throws on Malformed cell key error: ", () => {
+                    expect(() => boardUtils.parseKey("0,0,")).to.throw("Malformed cell key: 0,0,");
+                });
+
+                it("throws on Malformed cell key error: Input too short", () => {
+                    expect(() => boardUtils.parseKey("0")).to.throw("Malformed cell key: 0");
+                });
+            });
+            describe("Invalid key input: ", () => {
+                it("x is not a number: throw on Malformed cell key `n,1`", () => {
+                    expect(() => boardUtils.parseKey("n,1")).to.throw("Malformed cell key: n,1");
+                });
+                it("y is not a number: throw on Malformed cell key: `1,n`", () => {
+                    expect(() => boardUtils.parseKey("n,1")).to.throw("Malformed cell key: n,1");
+                });
+                it("x and y is not a number: throw on Malformed cell key: `n,n`", () => {
+                    expect(() => boardUtils.parseKey("n,n")).to.throw("Malformed cell key: n,n");
+                });
+            });
+        });
+    });
+
     /*
     isSurviving
     */
 
     describe("isSurviving: ", () => {
         describe("Cell is Alive", () => {
+            it("Neighbour Count equals 0, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, ALIVECELL, 0)).to.equal(false);
+            });
+
             it("Neighbour Count equals 1, return false", async () => {
                 expect(boardUtils.isSurviving(gameBoardSizeOne, ALIVECELL, 1)).to.equal(false);
             });
@@ -109,6 +189,10 @@ describe("Utils_Board v1", function() {
 
         });
         describe("Cell is Dead", () => {
+            it("Neighbour Count equals 0, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 0)).to.equal(false);
+            });
+
             it("Neighbour Count equals 1, return false", async () => {
                 expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 1)).to.equal(false);
             });
@@ -123,6 +207,10 @@ describe("Utils_Board v1", function() {
 
             it("Neighbour Count equals 4, return false", async () => {
                 expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 4)).to.equal(false);
+            });
+
+            it("Neighbour Count equals 9, return false", async () => {
+                expect(boardUtils.isSurviving(gameBoardSizeOne, DEADCELL, 9)).to.equal(false);
             });
         });
     });
@@ -143,7 +231,7 @@ describe("Utils_Board v1", function() {
                 expect(boardUtils.isReproducing(gameBoardSizeOne, DEADCELL, 2)).to.equal(false);
             });
 
-            it("has 4 neighbours, returnc false", async () => {
+            it("has 4 neighbours, return false", async () => {
                 expect(boardUtils.isReproducing(gameBoardSizeOne, DEADCELL, 4)).to.equal(false);
             });
         });
@@ -163,4 +251,4 @@ describe("Utils_Board v1", function() {
     });
 
     
-})
+});

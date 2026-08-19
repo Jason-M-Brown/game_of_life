@@ -133,7 +133,7 @@ function generateKey(x: number, y:number): string {
 /* 
     EFFECT: take the string "x,y" and produce {x , y} object 
 */
-function parseKey(n: string) : {x: number, y: number} {
+export function parseKey(n: string) : {x: number, y: number} {
     const parts = n.split(",");
     if(parts.length !== 2) {
         throw new Error(`Malformed cell key: ${n}`);
@@ -151,7 +151,7 @@ function parseKey(n: string) : {x: number, y: number} {
 /* 
     EFFECT: if dx and dy are 0, then return true
 */
-function lookingAtSelf(dx: number, dy: number): boolean {
+export function lookingAtSelf(dx: number, dy: number): boolean {
     if (dx === 0 && dy === 0) {
         return true
     }
@@ -161,7 +161,7 @@ function lookingAtSelf(dx: number, dy: number): boolean {
 /*  
     EFFECT: Return true if neighbour is currently alive, else false
  */
-function neighborAlive(game: GameBoard, x:number, y:number) : boolean {
+export function neighborAlive(game: GameBoard, x:number, y:number) : boolean {
     return game.board.has(generateKey(x, y))
 }
 
