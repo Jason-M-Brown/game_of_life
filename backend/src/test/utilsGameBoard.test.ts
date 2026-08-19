@@ -134,6 +134,14 @@ describe("Utils_Board v1", function() {
             it(`input "0,0"  returns {0, 0}`, async () => {
                 expect(boardUtils.parseKey("0,0")).to.deep.equal({x: 0, y: 0});
             });
+
+            it(`input "1,1"  returns {1, 1}`, async () => {
+                expect(boardUtils.parseKey("1,1")).to.deep.equal({x: 1, y: 1});
+            });
+
+            it(`input "1,1"  returns {-1, -1}`, async () => {
+                expect(boardUtils.parseKey("-1,-1")).to.deep.equal({x: -1, y: -1});
+            })
         });
         
         
@@ -152,7 +160,7 @@ describe("Utils_Board v1", function() {
                     expect(() => boardUtils.parseKey("n,1")).to.throw("Malformed cell key: n,1");
                 });
                 it("y is not a number: throw on Malformed cell key: `1,n`", () => {
-                    expect(() => boardUtils.parseKey("n,1")).to.throw("Malformed cell key: n,1");
+                    expect(() => boardUtils.parseKey("1,n")).to.throw("Malformed cell key: 1,n");
                 });
                 it("x and y is not a number: throw on Malformed cell key: `n,n`", () => {
                     expect(() => boardUtils.parseKey("n,n")).to.throw("Malformed cell key: n,n");
