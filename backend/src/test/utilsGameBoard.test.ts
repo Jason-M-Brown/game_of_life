@@ -73,7 +73,7 @@ describe("Utils_Board v1", function() {
         //Edge case when Not given a num
     });
 
-    /*
+    /* 
     setDead
     */
     it("setDead: Checks we can remove one cell that does exist in the set", async () => {
