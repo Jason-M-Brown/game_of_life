@@ -253,7 +253,7 @@ describe("Utils_Board v1", function() {
             });
 
         });
-        
+
         describe("Checking x and y Bounds: ", () => {
             it("x = -1 , y = -1 (both x and y under lower bounds, return false", () => {
                 expect(boardUtils.insideGameBoard(gameBoard, -1, -1)).to.be.false;
@@ -270,6 +270,71 @@ describe("Utils_Board v1", function() {
     parseNeighbourNode
     */
     describe("parseNeighbourNode: ", () => {
+        let initialCells: [number, number][]
+        let expectedCells: [number, number][];
+
+        describe("Edge Casae 1x1 grid: ", () => {
+            it("Checks single cell neighbour count", () => {
+                //Setup 1x1 grid and insures its correct
+                gameBoard.width = 1;
+                gameBoard.height = 1;
+                boardUtils.setAlive(gameBoard, 0, 0);
+                expect(gameBoard.board.has("0,0"));
+
+                //Start the check
+                const result : Set<string> = boardUtils.parseNeighborNodes(gameBoard);
+                expect(result.has("0,0")).to.be.true;
+                expect(result.size).to.equal(1);
+            })
+        });
+
+        describe("Corner Cases 3x3 grid:", () => {
+
+            it("Check case top left corner alive", () => {
+                initialCells = [[0,0]];
+                expectedCells = [[0,0], [0,1], [1,0], [1,1]]
+                
+                assertNeighborNodesExist(gameBoard, initialCells, expectedCells);
+
+            });
+            it("Check case top right corner alive", () => {
+                initialCells = [[2,0]];
+                expectedCells = [[2,0], [2,1], [1,0], [1,1]]
+
+                assertNeighborNodesExist(gameBoard, initialCells, expectedCells);
+            });
+            it("Check case bottom right corner alive", () => {
+                initialCells = [[2,2]];
+                expectedCells = [[2,2], [2,1], [1,2], [1,1]]
+
+                assertNeighborNodesExist(gameBoard, initialCells, expectedCells);
+            });
+            it("Check case bottom left corner alive", () => {
+                initialCells = [[0,2]];
+                expectedCells = [[0,2], [0,1], [1,2], [1,1]]
+
+                assertNeighborNodesExist(gameBoard, initialCells, expectedCells);
+            });
+        });
+        
+        describe("Center Case 3x3 grid: ", () => {
+            it("Center of 3x3 grid is alive, all 9 nodes should be in neightbour set: ", () => {
+                initialCells = [[1,1]];
+                expectedCells = [
+                        [0,0], [1,0], [2,0],
+                        [0,1], [1,1], [2,1],
+                        [0,2], [1,2], [2,2]
+                    ];
+
+                assertNeighborNodesExist(gameBoard, initialCells, expectedCells);       
+            });
+        });
+        
+
+        describe("General Case 5x5 grid: ", () => {
+            //TO DO:
+
+        });
 
 
     });
@@ -514,4 +579,15 @@ function assertNextGeneration(currentBoard : GameBoard, initialCells: [number, n
     currentBoard.board = boardUtils.generateNextState(currentBoard);
     //Validates generated board is correct
     expectBoardHasExactly(currentBoard, expectedCells);
+}
+
+//  EFFECT: asserts that all neighbour nodes have been succesfully grabbed
+function assertNeighborNodesExist(gameBoard: GameBoard, initialCells: [number, number][], expectedCells: [number,number][]): void {
+    setAliveStates(gameBoard, initialCells);
+    const result: Set<string> = boardUtils.parseNeighborNodes(gameBoard);
+    const expectedKeys = expectedCells.map(([x, y]) => `${x},${y}`);
+    expect(result.size).to.equal(expectedKeys.length);
+    for (const key of expectedKeys) {
+        expect(result.has(key)).to.be.true;
+    }
 }

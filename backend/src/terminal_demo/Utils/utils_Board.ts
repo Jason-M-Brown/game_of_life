@@ -40,7 +40,7 @@ export function generateNextState(currentState: GameBoard) : Set<string> {
     EFFECT: Grabs all nodes that are currently alive and neighbouring nodes,
            then returns the set 
 */
-function parseNeighborNodes(game: GameBoard) : Set<string> {
+export function parseNeighborNodes(game: GameBoard) : Set<string> {
     const parsedNodes = new Set<string>();
     for (const nextCell of game.board) {  //To check if there is a bug
         const {x , y} = parseKey(nextCell);
