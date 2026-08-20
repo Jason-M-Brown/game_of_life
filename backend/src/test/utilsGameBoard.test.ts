@@ -217,8 +217,53 @@ describe("Utils_Board v1", function() {
     insideGameBoard
     */
     describe("insideGameBoard: ", () => {
+        let width: number;
+        let height: number;
 
+        beforeEach(() => {
+            width = gameBoard.width;
+            height = gameBoard.height;
+        })
 
+        describe("Checking x Bounds: ", () => {
+            it("X = -1, (below lower bound), return false", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, -1, 0)).to.be.false;
+            });
+
+            it("X = width - 1, (just below upper bound), return true", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, (width - 1), 0)).to.be.true;
+            });
+
+            it("X = width, (just past upper bound), return false", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, (width), 0)).to.be.false;  
+            });
+        });
+
+        describe("Checking y Bounds: ", () => {
+            it("y = -1, (below lower bound), return false", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, -1, 0)).to.be.false;
+            });
+
+            it("y = height - 1, (just below upper bound), return true", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, (height - 1), 0)).to.be.true;
+            });
+
+            it("y = height, (just past upper bound), return false", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, height, 0)).to.be.false;  
+            });
+
+        });
+        
+        describe("Checking x and y Bounds: ", () => {
+            it("x = -1 , y = -1 (both x and y under lower bounds, return false", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, -1, -1)).to.be.false;
+            })
+
+            it("x = 0 , y = 0 (both x and y inside bounds, return true", () => {
+                expect(boardUtils.insideGameBoard(gameBoard, 0, 0)).to.be.true;
+            })
+
+        });
     });
 
     /*

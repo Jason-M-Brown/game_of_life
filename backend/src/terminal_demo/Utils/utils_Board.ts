@@ -66,7 +66,7 @@ function parseNeighborNodes(game: GameBoard) : Set<string> {
     EFFECT: Check to see if my current node is withing the bounds of the board.
             Return false if I am outside the bounds, true if I am within the bounds
 */
-function insideGameBoard(game: GameBoard, nextX: number, nextY: number) : boolean {
+export function insideGameBoard(game: GameBoard, nextX: number, nextY: number) : boolean {
     if(game.width <= nextX || nextX < 0) {
         return false;
     }
