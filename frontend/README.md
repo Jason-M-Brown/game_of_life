@@ -12,8 +12,8 @@ MVP, with plans to expand to a Node backend and React frontend.
 - c8
 
 ## Status Update
-Phase 1: Completed
-Phase 2: Completed
+Phase 1: Completed : 
+Phase 2: Completed : 2026-08-20
 Phase 3: Working on
 
 
@@ -29,10 +29,5 @@ Phase 3: Working on
     - Reusable test helpers to keep setup and assertions DRY across the suite
 
 **Phase 3: Develop a MVP terminal based Conway's game of life**
-     
-
-Testing Design: utilsGameBoard.test.ts
-    - built reusable scope tests that use hoisted variables in a described block in every test
-## Phase 2 - Turn the Terminal based game into a Node backend 
-## Phase 3 - Add React 
-## Phase 4 - Add more Phases
+**Phase 4: Turn Terminal Based game into a Node backend**
+**Phase 5: Develope a front end using React**
