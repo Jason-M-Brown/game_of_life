@@ -1,4 +1,4 @@
-import * as boardUtils from "../terminal_demo/Utils/utils_Board.js"
+import * as boardUtils from "../terminal_demo/Utils/boardUtils.js"
 import fs from "fs/promises";
 import { expect } from "chai";
 //import request from "supertest";
@@ -335,7 +335,6 @@ describe("Utils_Board v1", function() {
         
     });
 
-
     /*
     nextGeneration
     */
@@ -387,9 +386,6 @@ describe("Utils_Board v1", function() {
         });
     }); 
 
-
-
-
     /*
     generateKey
     */
@@ -407,7 +403,6 @@ describe("Utils_Board v1", function() {
             expect(boardUtils.generateKey(1, 2)).to.equal("1,2");
         })
    });
-
 
     /*
     parseKey
@@ -451,7 +446,6 @@ describe("Utils_Board v1", function() {
             });
         });
     });
-
 
     /* 
     lookingAtSelf
