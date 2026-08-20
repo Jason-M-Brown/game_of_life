@@ -29,5 +29,11 @@ custom patterns.
 - Reusable test helpers to keep setup and assertions DRY across the suite
 
 **Phase 3: Develop a MVP terminal based Conway's game of life**
+User Stories:
+- As a user, I want to be able to select the area of the board between (1 - 10), so I can control how large the simulation is.
+- As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns 
+- As a user, I want to watch the board update through each generation, so i can observe the simulation working
+- As a user, I want to be able to stop the simulation, so I have a clean demo experence
+
 **Phase 4: Turn Terminal Based game into a Node backend**
 **Phase 5: Develope a front end using React**
