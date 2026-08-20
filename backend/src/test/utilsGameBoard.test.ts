@@ -84,47 +84,159 @@ describe("Utils_Board v1", function() {
         expect(gameBoard.board.size).to.equal(0);
     });
 
-
-    /* 
-    lookingAtSelf
+    /*
+    generateNextState
     */
-    describe("lookingAtSelf: ", () => {
-        it("dx =  0 and dy =  0, return true", async () => {
-            expect(boardUtils.lookingAtSelf(0, 0)).to.equal(true);
+    describe("generateNextState: ", () => {
+        let currentBoard: GameBoard;
+        describe("Underpopulation - 1x1 board (isolated cell): ", () => {
+            
+            beforeEach(() => {
+                currentBoard = {
+                height: 1,
+                width: 1,
+                board: new Set<string>
+                };
+            });
+
+            it("Isolated cell, no alive cells stays dead (underpopulated)", () => {
+                const result: Set<string> = boardUtils.generateNextState(currentBoard);
+                expect(result.size).to.equal(0);
+            });
+
+            it("Isolated cell, set alive but dies (underpopulated)", () => {
+                expect(currentBoard.board.size).to.equal(0);
+                boardUtils.setAlive(currentBoard, 0, 0)
+                expect(currentBoard.board.size).to.equal(1);
+                expect(currentBoard.board.has("0,0")).to.be.true;
+                const result: Set<string> = boardUtils.generateNextState(currentBoard);
+                expect(result.size).to.equal(0);
+            });
         });
 
-        it("dx = -1 and dy =  0, return false" , async () => {
-            expect(boardUtils.lookingAtSelf(-1, 0)).to.equal(false);
+        describe("General Rules - 5x5 Board, away from edge: ", () => {
+            let TestCells: [number, number][];
+            let ResultCells: [number, number][];
+            
+            beforeEach(() => {
+                currentBoard = {
+                height: 5,
+                width: 5,
+                board: new Set<string>
+                }; 
+            });
+
+            it("5 live cells -> 5 live cells: one blink: ", () => {
+                TestCells   = [[1, 1], [1, 2], [2, 1], [2, 2], [3, 3]];
+                ResultCells = [[1, 1], [1, 2], [2, 1], [3, 2], [2, 3]];
+                
+                assertNextGeneration(currentBoard, TestCells, ResultCells);
+            });
+
+            it("4 live cells -> block formation no change", () => {
+                TestCells   = [[1, 1], [2, 2], [1, 2], [2, 1]];
+                ResultCells = [[1, 1], [2, 2], [1, 2], [2, 1]];
+
+                assertNextGeneration(currentBoard, TestCells, ResultCells);
+            });
+
+            it("3 live cells -> line formation to horizontal formation - 90 degree rotation", () => {
+                TestCells   = [[1, 1], [1, 2], [1, 3]];
+                ResultCells = [[0, 2], [1, 2], [2, 2]];
+
+                assertNextGeneration(currentBoard, TestCells, ResultCells);
+            })
+
+            it("4 live cells -> 6 live cells", () => {
+                TestCells    = [[2, 2], [3, 3], [4, 3], [3, 4]];
+                ResultCells  = [[3, 2], [2, 3], [3, 3], [4, 3], [3, 4], [4, 4]];
+
+                assertNextGeneration(currentBoard, TestCells, ResultCells);
+            });
+
+            it("5 live cells -> 4 live cells  (frozen state)", () => {
+                TestCells    = [[1, 1], [3, 1], [2, 2], [1, 3], [3, 3]];
+                ResultCells  = [[1, 2], [2, 1], [2, 3], [3, 2]];
+                //const failing: [number, number][] =  [[1, 2], [2, 1], [2, 3], [3, 2], [1,1]];
+
+                assertNextGeneration(currentBoard, TestCells, ResultCells);
+                //Applied Result Cells in TestCells location because no changes should occure
+                //do to this being a stable state
+                assertNextGeneration(currentBoard, ResultCells, ResultCells);
+            });
+            
+            //TO DO: Can always generate more tests
+        });
+        
+        describe("Boundary - 5x5 board, touching edge: ", () => {
+            let TestCells: [number, number][];
+            let ResultCells: [number, number][];
+            
+            beforeEach(() => {
+                currentBoard = {
+                height: 5,
+                width: 5,
+                board: new Set<string>
+                }; 
+            });
+
         });
 
-        it("dx =  0 and dy = -1, return false", async () => {
-            expect(boardUtils.lookingAtSelf(0, -1)).to.equal(false);
-        });
 
-        it("dx =  1 and dy =  0, return false", async () => {
-            expect(boardUtils.lookingAtSelf(1, 0)).to.equal(false);
-        });
-
-        it("dx =  0 and dy =  1, return false", async () => {
-            expect(boardUtils.lookingAtSelf(0, 1)).to.equal(false);
-        });
     });
 
+
+    //////////////////
+    //Helper Functions
+    //////////////////
+
+
     /* 
-    neighborAlive 
+    insideGameBoard
     */
+    describe("insideGameBoard: ", () => {
 
-    describe("neighborAlive: ", () => {
-        it("Neighbour is inside board set : return true", async () => {
-            expect(boardUtils.neighborAlive(gameBoardSizeOne, x_alive, y_alive)).to.equal(true);
-
-        });
-
-        it("Neighbour is not inside board set : return false", async () => {
-            expect(boardUtils.neighborAlive(gameBoardSizeOne, x_dead, y_dead)).to.equal(false);
-        });
 
     });
+
+    /*
+    parseNeighbourNode
+    */
+    describe("parseNeighbourNode: ", () => {
+
+
+    });
+
+
+    /*
+    nextGeneration
+    */
+    describe("nextGeneration: ", () => {
+
+
+    }); //
+
+
+
+
+    /*
+    generateKey
+    */
+   describe("generateKey: ", () => {
+        it("input x =  0, y =  0: returns ` 0, 0`", () => {
+            expect(boardUtils.generateKey(0, 0)).to.equal("0,0");
+        })
+        it("input x =  1, y =  1: returns ` 1, 1`", () => {
+            expect(boardUtils.generateKey(1, 1)).to.equal("1,1");
+        })
+        it("input x = -1, y = -1: returns `-1,-1`", () => {
+            expect(boardUtils.generateKey(-1, -1)).to.equal("-1,-1");
+        })
+        it("input x = 1, y = 2: returns ` 1, 2`", () => {
+            expect(boardUtils.generateKey(1, 2)).to.equal("1,2");
+        })
+   });
+
 
     /*
     parseKey
@@ -167,6 +279,48 @@ describe("Utils_Board v1", function() {
                 });
             });
         });
+    });
+
+
+    /* 
+    lookingAtSelf
+    */
+    describe("lookingAtSelf: ", () => {
+        it("dx =  0 and dy =  0, return true", async () => {
+            expect(boardUtils.lookingAtSelf(0, 0)).to.equal(true);
+        });
+
+        it("dx = -1 and dy =  0, return false" , async () => {
+            expect(boardUtils.lookingAtSelf(-1, 0)).to.equal(false);
+        });
+
+        it("dx =  0 and dy = -1, return false", async () => {
+            expect(boardUtils.lookingAtSelf(0, -1)).to.equal(false);
+        });
+
+        it("dx =  1 and dy =  0, return false", async () => {
+            expect(boardUtils.lookingAtSelf(1, 0)).to.equal(false);
+        });
+
+        it("dx =  0 and dy =  1, return false", async () => {
+            expect(boardUtils.lookingAtSelf(0, 1)).to.equal(false);
+        });
+    });
+
+    /* 
+    neighborAlive 
+    */
+
+    describe("neighborAlive: ", () => {
+        it("Neighbour is inside board set : return true", async () => {
+            expect(boardUtils.neighborAlive(gameBoardSizeOne, x_alive, y_alive)).to.equal(true);
+
+        });
+
+        it("Neighbour is not inside board set : return false", async () => {
+            expect(boardUtils.neighborAlive(gameBoardSizeOne, x_dead, y_dead)).to.equal(false);
+        });
+
     });
 
     /*
@@ -260,3 +414,37 @@ describe("Utils_Board v1", function() {
 
     
 });
+
+
+//Helper For Test cases
+
+//  EFFECT: Add the array of cells to the current gameboard
+function setAliveStates(game: GameBoard, cells: [number, number][]): void {
+    game.board.clear();
+    for (const [x, y] of cells) {
+        boardUtils.setAlive(game, x, y);
+    }
+}
+
+// EFFECT: checks that the given board contains exactly the specified cells
+function expectBoardHasExactly(currentBoard: GameBoard, cells: [number, number][]): void {
+    expect(currentBoard.board.size).to.equal(cells.length);
+    for(const [x, y] of cells) {
+        expect(currentBoard.board.has(`${x},${y}`)).to.be.true;
+    }
+};
+
+/*
+    EFFECT: setup the board with initial cells, run one generation,
+            and verfy the results matches expected Cells
+*/
+function assertNextGeneration(currentBoard : GameBoard, initialCells: [number, number][], expectedCells: [number, number][]): void {
+    //Set's which cells are alive
+    setAliveStates(currentBoard, initialCells);
+    //Validate Setup - confirms the pattern was set
+    expectBoardHasExactly(currentBoard, initialCells);
+
+    currentBoard.board = boardUtils.generateNextState(currentBoard);
+
+    expectBoardHasExactly(currentBoard, expectedCells);
+}

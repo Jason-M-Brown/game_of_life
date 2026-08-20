@@ -126,7 +126,7 @@ function nextGeneration(game: GameBoard, parsedBoard: Set<string>) : Set<string>
 /*
     EFFECT: takes x and y and and converts it into a string "x, y"
 */
-function generateKey(x: number, y:number): string {
+export function generateKey(x: number, y:number): string {
     return `${x},${y}`;
 }
 
