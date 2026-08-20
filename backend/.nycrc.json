@@ -1,0 +1,7 @@
+{
+  "extension": [".ts"],
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/test/**/*.ts", "**/*.d.ts"],
+  "reporter": ["text", "html"],
+  "all": true
+}
