@@ -95,7 +95,7 @@ describe("Utils_Board v1", function() {
                 currentBoard = {
                 height: 1,
                 width: 1,
-                board: new Set<string>
+                board: new Set<string>()
                 };
             });
 
@@ -114,75 +114,97 @@ describe("Utils_Board v1", function() {
             });
         });
 
+        let initialCells: [number, number][];
+        let expectedCells: [number, number][];
         describe("General Rules - 5x5 Board, away from edge: ", () => {
-            let TestCells: [number, number][];
-            let ResultCells: [number, number][];
             
             beforeEach(() => {
                 currentBoard = {
                 height: 5,
                 width: 5,
-                board: new Set<string>
+                board: new Set<string>()
                 }; 
             });
 
             it("5 live cells -> 5 live cells: one blink: ", () => {
-                TestCells   = [[1, 1], [1, 2], [2, 1], [2, 2], [3, 3]];
-                ResultCells = [[1, 1], [1, 2], [2, 1], [3, 2], [2, 3]];
+                initialCells   = [[1, 1], [1, 2], [2, 1], [2, 2], [3, 3]];
+                expectedCells = [[1, 1], [1, 2], [2, 1], [3, 2], [2, 3]];
                 
-                assertNextGeneration(currentBoard, TestCells, ResultCells);
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
             });
 
             it("4 live cells -> block formation no change", () => {
-                TestCells   = [[1, 1], [2, 2], [1, 2], [2, 1]];
-                ResultCells = [[1, 1], [2, 2], [1, 2], [2, 1]];
+                initialCells   = [[1, 1], [2, 2], [1, 2], [2, 1]];
+                expectedCells = [[1, 1], [2, 2], [1, 2], [2, 1]];
 
-                assertNextGeneration(currentBoard, TestCells, ResultCells);
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
             });
 
             it("3 live cells -> line formation to horizontal formation - 90 degree rotation", () => {
-                TestCells   = [[1, 1], [1, 2], [1, 3]];
-                ResultCells = [[0, 2], [1, 2], [2, 2]];
+                initialCells   = [[1, 1], [1, 2], [1, 3]];
+                expectedCells = [[0, 2], [1, 2], [2, 2]];
 
-                assertNextGeneration(currentBoard, TestCells, ResultCells);
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
             })
 
             it("4 live cells -> 6 live cells", () => {
-                TestCells    = [[2, 2], [3, 3], [4, 3], [3, 4]];
-                ResultCells  = [[3, 2], [2, 3], [3, 3], [4, 3], [3, 4], [4, 4]];
+                initialCells    = [[2, 2], [3, 3], [4, 3], [3, 4]];
+                expectedCells  = [[3, 2], [2, 3], [3, 3], [4, 3], [3, 4], [4, 4]];
 
-                assertNextGeneration(currentBoard, TestCells, ResultCells);
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
             });
 
             it("5 live cells -> 4 live cells  (frozen state)", () => {
-                TestCells    = [[1, 1], [3, 1], [2, 2], [1, 3], [3, 3]];
-                ResultCells  = [[1, 2], [2, 1], [2, 3], [3, 2]];
+                initialCells    = [[1, 1], [3, 1], [2, 2], [1, 3], [3, 3]];
+                expectedCells  = [[1, 2], [2, 1], [2, 3], [3, 2]];
                 //const failing: [number, number][] =  [[1, 2], [2, 1], [2, 3], [3, 2], [1,1]];
 
-                assertNextGeneration(currentBoard, TestCells, ResultCells);
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
                 //Applied Result Cells in TestCells location because no changes should occure
                 //do to this being a stable state
-                assertNextGeneration(currentBoard, ResultCells, ResultCells);
+                assertNextGeneration(currentBoard, expectedCells, expectedCells);
             });
             
             //TO DO: Can always generate more tests
         });
         
         describe("Boundary - 5x5 board, touching edge: ", () => {
-            let TestCells: [number, number][];
-            let ResultCells: [number, number][];
-            
             beforeEach(() => {
                 currentBoard = {
                 height: 5,
                 width: 5,
-                board: new Set<string>
+                board: new Set<string>()
                 }; 
             });
 
+            it("TOP LEFT: 3 cells alive - Vertical line generates 2 alive cells", () => {
+                initialCells   = [[0,0], [0,1], [0,2]];
+                expectedCells = [[0,1], [1,1]];
+
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
+            });
+
+            it("TOP LEFT: 3 cells alive - 1 cells die, 1 cell born, 1 cell survives", () => {
+                initialCells   = [[0,0], [1,1], [0,2]];
+                expectedCells = [[0,1], [1, 1]];
+
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
+            });
+
+            it("TOP RIGHT: 3 cells alive - 3 cells die, 1 cell born", () => {
+                initialCells   = [[3,0], [4,1], [2,2]];
+                expectedCells = [[3,1]];
+                
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
+            });
+
+            it("BOTTOM RIGHT: 3 cells alive - 3 cells die, 1 cell born", () => {
+                initialCells   = [[4,3], [3,4], [2,2]];
+                expectedCells = [[3,3]];
+
+                assertNextGeneration(currentBoard, initialCells, expectedCells);
+            });
         });
-
-
     });
 
 
@@ -443,8 +465,8 @@ function assertNextGeneration(currentBoard : GameBoard, initialCells: [number, n
     setAliveStates(currentBoard, initialCells);
     //Validate Setup - confirms the pattern was set
     expectBoardHasExactly(currentBoard, initialCells);
-
+    //Generates next board
     currentBoard.board = boardUtils.generateNextState(currentBoard);
-
+    //Validates generated board is correct
     expectBoardHasExactly(currentBoard, expectedCells);
 }
