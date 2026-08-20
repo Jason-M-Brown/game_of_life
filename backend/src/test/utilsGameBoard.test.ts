@@ -35,21 +35,6 @@ describe("Utils_Board v1", function() {
         boardUtils.setAlive(gameBoardSizeOne, x_alive, y_alive);
     });
 
-    afterEach(async () => {});
-
-    /*
-    it("text", async () => {
-
-    });
-
-
-    describe("", () => {
-        describe("", () => {
-
-        });
-    });
-    */
-
     /* 
     gameState tests
     */
@@ -332,11 +317,22 @@ describe("Utils_Board v1", function() {
         
 
         describe("General Case 5x5 grid: ", () => {
-            //TO DO:
-
+            beforeEach(() => {
+                gameBoard.height = 5;
+                gameBoard.width = 5;
+            })
+            it("5 alive generating 12 neighbours:", () => {
+                initialCells = [[0,0], [0,1], [1,0], [1,1], [2,1]];
+                
+                expectedCells = [[0,0], [0,1], [1,0], [1,1], [2,1],
+                                 [2,0], [3,0], [3,1], [3,2], [2,2],
+                                 [1,2], [0,2]];
+                
+                assertNeighborNodesExist(gameBoard, initialCells, expectedCells);
+            });
         });
 
-
+        
     });
 
 
@@ -344,9 +340,52 @@ describe("Utils_Board v1", function() {
     nextGeneration
     */
     describe("nextGeneration: ", () => {
+        let initialCells: [number, number][]
+        let expectedCells: [number, number][];
+        let parsedCells = new Set<string>();
+
+        beforeEach(() => {
+        parsedCells = new Set<string>([ "0,0", "0,1", "0,2", "1,0", 
+                        "1,1", "1,2", "2,0", "2,1", 
+                        "2,2"]);
+
+        });
 
 
-    }); //
+        it("Empty Parsed Board - return must be empty", () => {
+            const result = boardUtils.nextGeneration(gameBoard, new Set<string>());
+            expect(result.size).to.equal(0);
+        });
+
+        it("Reproduction: Dead cell with 3 neighbours becomes alive", () => {
+            initialCells = [[1,1], [2,1], [1,2]]
+            setAliveStates(gameBoard, initialCells);
+            expectBoardHasExactly(gameBoard, initialCells);
+            const result = boardUtils.nextGeneration(gameBoard, parsedCells)
+            expect(result.size).to.equal(4);
+        });
+
+        it("Reproduction: 3 alive cells adjacent to current cell, but current cell is not in parsed List", () => {
+            initialCells = [[1, 0], [1, 2], [0, 1]];
+            setAliveStates(gameBoard, initialCells);
+            expectBoardHasExactly(gameBoard, initialCells);
+            parsedCells.delete("1,1");
+            const result = boardUtils.nextGeneration(gameBoard, parsedCells);
+            expect(result.size).to.equal(1);
+        })
+
+        it("Sanity: Have Parsed Board, but no alive cells, returns empty", () => {
+            const result = boardUtils.nextGeneration(gameBoard, parsedCells);
+            expect(result.size).to.equal(0);
+        });
+
+        it("Isolated Parsed Board key, result returns nothing", () => {
+            parsedCells.clear();
+            parsedCells.add("2,2");
+            const result = boardUtils.nextGeneration(gameBoard, parsedCells);
+            expect(result.size).to.equal(0);
+        });
+    }); 
 
 
 

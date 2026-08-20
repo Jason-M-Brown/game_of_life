@@ -78,7 +78,7 @@ export function insideGameBoard(game: GameBoard, nextX: number, nextY: number) :
 
 
 /* EFFECT: check all required cells and only return the cells of the alive state. */
-function nextGeneration(game: GameBoard, parsedBoard: Set<string>) : Set<string> {
+export function nextGeneration(game: GameBoard, parsedBoard: Set<string>) : Set<string> {
     const nextGenBoard = new Set<string>;
 
     for(const nextCell of parsedBoard) {
