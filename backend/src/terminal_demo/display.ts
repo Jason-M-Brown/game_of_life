@@ -15,6 +15,7 @@ let DIVIDER: string = ``;
 let SIZE: number = 0;
 
 let DISPLAYBOARDARRAY: string[][] = [];
+let DISPLAYCLEANARRAY: string[][] = [];
 
 
 const STARTUP_MESSAGE = getWhiteSpace() + WELCOME + "\n\n" + PRESS_ENTER;
@@ -58,9 +59,7 @@ export function generateLocation(x: number, y:number) {
     return `(${x},${y}), `
 };
 
-export function getDisplayBoard() {
 
-}
 export function getBoardStatus(): string {
     if(DISPLAYBOARDARRAY.length == 0) {
         generateBoardStatus();
@@ -87,12 +86,17 @@ export function askUserToSetAlive() {
 
 }
 
+
 export function updateDisplayBoard(x: number, y: number) {
     if(DISPLAYBOARDARRAY[y]![x] === DEADCELL) {
         DISPLAYBOARDARRAY[y]![x] = ALIVECELL;
         return;
     }
     DISPLAYBOARDARRAY[y]![x] = DEADCELL;
+}
+
+export function resetDisplayArray() {
+    DISPLAYBOARDARRAY = DISPLAYCLEANARRAY.map(row => [...row]);
 }
 
 
@@ -125,10 +129,13 @@ function generateDisplay() : string {
 function generateBoardStatus(): string[][] {
     for(let y = 0; y < SIZE; y++) {
         let row: string[] = [];
+        let cleanRow: string[] = [];
         for(let x = 0; x < SIZE; x++) {
             row.push(getDeadCell());
+            cleanRow.push(getDeadCell());
         }
         DISPLAYBOARDARRAY.push(row);
+        DISPLAYCLEANARRAY.push(cleanRow);
     }
     return DISPLAYBOARDARRAY;
 }

@@ -3,16 +3,14 @@ import {print, waitForKey, waitForBoardSize, getUserCords, askChangeState} from 
 import {parseKey, generateNextState} from "./boardUtils.js";
 import type {GameBoard} from "../Interfaces/interface_board.js"
 
-
-let BoardWithCords: string = "";
-let SIZE: number = 1;
+let SIZE: number;
 
 export async function gameStart(): Promise<number> {
     print(consoleDisplay.getStartup());
     await waitForKey("");
-    print(consoleDisplay.getWhiteSpace());
-    const size = await waitForBoardSize("Please enter the board size, 1-9: ")
-    print(consoleDisplay.getWhiteSpace());
+    clearTerminalScreen();
+    let size:number = await waitForBoardSize("Please enter the board size, 1-9: ")
+    clearTerminalScreen();
     consoleDisplay.setSize(size);
     SIZE = size;
     return size;
@@ -33,6 +31,7 @@ export async function askUserToSetAlive(): Promise<Set<string>> {
         }
 
         const {x, y} = await grabUserCords(aliveStates);
+        clearTerminalScreen();
         updateTerminalWindow(x, y);
         displayBoard();
         
@@ -44,19 +43,40 @@ export async function askUserToSetAlive(): Promise<Set<string>> {
 
 
 export async function runGenerations(board: GameBoard, limit: number): Promise<void> {
-    do {
-        //TO DO:
-        print(consoleDisplay.getWhiteSpace());
-        generateNextState(board)
-        limit--; 
-    } while (limit > 0);
+    let x = 50;
+    clearTerminalScreen();
+    do{
+        const updatedBoard: Set<string> = generateNextState(board);
+        board.board = updatedBoard;
+        await updateTerminalDisplay(board);
+
+        x--;
+    } while (x > 0);
+
 }
 
 
 
 /* HELPERS */
 
-function updateALiveState(aliveState: Set<string>, cords: string) :void {
+async function updateTerminalDisplay(nextBoard: GameBoard): Promise<void> {
+    consoleDisplay.resetDisplayArray();
+    for(const cell of nextBoard.board) {
+        const {x, y} = parseKey(cell);
+        consoleDisplay.updateDisplayBoard(x, y);
+    }
+    print(consoleDisplay.getWhiteSpace());
+    print(getCellDisplay());
+    await new Promise(resolve => setTimeout(resolve, 400));
+
+}
+
+function clearTerminalScreen(): void {
+    print(consoleDisplay.getWhiteSpace());
+}
+
+
+function updateAliveState(aliveState: Set<string>, cords: string) :void {
     if(aliveState.has(cords)) {
         aliveState.delete(cords);
         return;
@@ -66,7 +86,7 @@ function updateALiveState(aliveState: Set<string>, cords: string) :void {
 
 async function grabUserCords(aliveStates: Set<string>) : Promise<{x: number, y:number}> {
     const cords: string = await getUserCords(consoleDisplay.askUserToSetAlive(), SIZE);
-    updateALiveState(aliveStates, cords);
+    updateAliveState(aliveStates, cords);
     return parseKey(cords)
 }
 
