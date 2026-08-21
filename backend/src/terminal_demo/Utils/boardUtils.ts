@@ -54,7 +54,7 @@ export function parseNeighborNodes(game: GameBoard) : Set<string> {
                 /*
                     I am currently looking at a node that is not within the board, so skip
                     NOTE!!! If I later wish to add a wrap around feature, this would be the 
-                    place to define it
+                    place to define it.. IE bottom right corner maps to top right
                 */
             }
         }

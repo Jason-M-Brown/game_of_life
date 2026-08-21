@@ -1,3 +1,4 @@
+import { displayBoard } from "./Utils/gameUtils.js";
 
 const DEADCELL: string = `▢`;
 const ALIVECELL: string = `■`;
@@ -5,7 +6,8 @@ const TRANSITION_DEAD_TO_ALIVE: string = `▣`;
 const TRANSITION_ALIVE_TO_DEAD: string = `X`;
 const WELCOME: string = "Welcome to Conway's Game of life ";
 const PRESS_ENTER: string = "Press enter to continue..."
-const ASK_TO_SET_ALIVE: string = "Please enter the cell you wish to set alive... Example `(0,0)`:  "
+const ASK_TO_SET_ALIVE: string = "Please enter the cell you wish to set alive... (Example: 0,0 ): "
+const Q_CHANGESTATE: string = "Would you like to change the state of any cell? (y/n): "
 
 let WHITESPACE = ``;
 let LEGEND: string = ``;
@@ -17,7 +19,9 @@ let DISPLAYBOARDARRAY: string[][] = [];
 
 const STARTUP_MESSAGE = getWhiteSpace() + WELCOME + "\n\n" + PRESS_ENTER;
 
-
+export function askChangeState() {
+    return Q_CHANGESTATE;
+}
 
 export function getWhiteSpace() : string {
     if(WHITESPACE !== ``) {
@@ -31,7 +35,7 @@ export function getStartup() {
 }
 
 export function getSize(dimension: string) {
-    return `Please enter the ${dimension} size. (1 to 10)`
+    return `Please enter the ${dimension} size. (1 to 9)`
 };
 
 export function getDeadCell() {
@@ -81,6 +85,14 @@ export function setSize(size: number) {
 export function askUserToSetAlive() {
     return ASK_TO_SET_ALIVE;
 
+}
+
+export function updateDisplayBoard(x: number, y: number) {
+    if(DISPLAYBOARDARRAY[y]![x] === DEADCELL) {
+        DISPLAYBOARDARRAY[y]![x] = ALIVECELL;
+        return;
+    }
+    DISPLAYBOARDARRAY[y]![x] = DEADCELL;
 }
 
 

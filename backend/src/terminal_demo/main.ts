@@ -5,7 +5,6 @@ import type {GameBoard} from "./Interfaces/interface_board.js"
 
 const size: number = await gameUtils.gameStart();
 
-let generations :number = 20;
 let board : GameBoard = {
     width: size,
     height: size,
@@ -13,7 +12,8 @@ let board : GameBoard = {
 }
 
 gameUtils.displayBoard();
-await gameUtils.askUserToSetAlive();
-//set board, then start generating game of life
+board.board = await gameUtils.askUserToSetAlive();
+await gameUtils.runGenerations(board, 20);
 
 process.exit(1);
+
