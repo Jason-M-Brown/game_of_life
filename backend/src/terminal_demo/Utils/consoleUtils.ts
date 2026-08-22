@@ -22,9 +22,14 @@ export function print(output: any) {
 export async function getUserCords(question: string, max:number): Promise<string> {
   const limit = max - 1;
   const coordPattern = new RegExp(`^[0-${limit}],[0-${limit}]$`)
+  const devPattern = /^\d+,\d+$/;
   const toString = (input:string) => input;
-  const isValid = (value:string) => coordPattern.test(value)
-  return promptUntilValid(question, (input) => input, (value) => coordPattern.test(value))
+  const isValid = (value:string) => coordPattern.test(value);
+  const isValidDev = (value:string) => devPattern.test(value);
+
+  //TO DO: DEV UPDATE
+  //return promptUntilValid(question, toString, isValidDev)
+  return promptUntilValid(question, toString, (value) => coordPattern.test(value))
 }
 
 /*
@@ -32,8 +37,11 @@ export async function getUserCords(question: string, max:number): Promise<string
 */
 export async function waitForBoardSize(question: string) : Promise<number> {
   const isValid = (input:number) => !Number.isNaN(input) && input >= 1 && input < 10
+  const isValidDev = (input:number) => !Number.isNaN(input)
   const toNumber = (input:string) => Number(input);
   
+  //TO DO: DEV UPDATE
+  //return promptUntilValid(question, toNumber, isValidDev);
   return promptUntilValid(question, toNumber, isValid);
 }
 

@@ -43,23 +43,27 @@ export async function askUserToSetAlive(): Promise<Set<string>> {
 
 
 export async function runGenerations(board: GameBoard, limit: number): Promise<void> {
-    let x = 50;
+    let x = limit;
     clearTerminalScreen();
     do{
         const updatedBoard: Set<string> = generateNextState(board);
         board.board = updatedBoard;
-        await updateTerminalDisplay(board);
+        await updateTerminalDisplay(board, x);
 
         x--;
-    } while (x > 0);
-
+    } while (x > -1);
+    print("Thanks for checking out the terminal Demo. :) \n");
+    print(`If you want to check the unbounded grid and are fine with the terminal not displaying intended outputs,
+then swap the return statement on the following functions in consoleUtils: \n
+    getUserCords \n
+    waitForBoardSize \n`)
 }
 
 
 
 /* HELPERS */
 
-async function updateTerminalDisplay(nextBoard: GameBoard): Promise<void> {
+async function updateTerminalDisplay(nextBoard: GameBoard, generation: number): Promise<void> {
     consoleDisplay.resetDisplayArray();
     for(const cell of nextBoard.board) {
         const {x, y} = parseKey(cell);
@@ -67,7 +71,8 @@ async function updateTerminalDisplay(nextBoard: GameBoard): Promise<void> {
     }
     print(consoleDisplay.getWhiteSpace());
     print(getCellDisplay());
-    await new Promise(resolve => setTimeout(resolve, 400));
+    print(`Generations Left: ${generation}`);
+    await new Promise(resolve => setTimeout(resolve, 150));
 
 }
 

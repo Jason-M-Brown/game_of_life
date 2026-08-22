@@ -21,7 +21,7 @@ MVP, with plans to expand to a Node backend and React frontend.
 ## Project Goals
 **Phase 1: Plan out required utility functions for data Processing - Done** 
 **Phase 2: Build a test file to verify utility functions work - Done**
-- Reduced test duplication using `describe` -scoped fixtures (shared board state via `beforeEach`)
+-  Reduced test duplication using `describe` -scoped fixtures (shared board state via `beforeEach`)
 - Built reusable assertion helpers (`setAliveStates`, `expectBoardHasExactly`, `assertNextGeneration`, `assertNeighborNodesExist`) used across the suite
 - Unit test for every utility function (branch and boundry-value coverage)
 - Integrtion test using recongized Game of Life patterns (block, blinker) plus hand-traced
@@ -31,10 +31,15 @@ custom patterns.
 
 **Phase 3: Develop a MVP terminal based Conway's game of life**
 User Stories:
-- As a user, I want to be able to select the area of the board between (1 - 9), so I can control how large the simulation is.
-- As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns 
-- As a user, I want to watch the board update through each generation, so i can observe the simulation working
+- [x] ~~ As a user, I want to be able to select the area of the board between (1 - 9), so I can control how large the simulation is. ~~
+- [x] ~~ As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns ~~
+- [x] ~~ As a user, I want to watch the board update through each generation, so i can observe the simulation working ~~
 
+**Implementation: **
+- Built a `readline` - based prompt system (`promptUntilValid`) with reusable parse/validation callbacks, used for board size, cell coordinates, and yes/no prompts
+- Rendered the board as a 2D character grid (`▢`/`■`), using template array and mutable display array to support resetting between generations
+- Cached static output (coordinate legend, whitespace) that doesn't change during a session, while regenerating the dynamic board display every render
+- Ran the simulation loop with `runGenerations`, clearing and redrawing the terminal each generation with a delay between frames
 
 **Phase 4: Turn Terminal Based game into a Node backend**
 **Phase 5: Develope a front end using React**

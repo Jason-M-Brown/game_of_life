@@ -4,6 +4,7 @@ import type {GameBoard} from "./Interfaces/interface_board.js"
 //import * as gameUtils from "./utils_Game.js";
 
 const size: number = await gameUtils.gameStart();
+const GENERATION_LIMIT: number = 65;
 
 let board : GameBoard = {
     width: size,
@@ -13,7 +14,7 @@ let board : GameBoard = {
 
 gameUtils.displayBoard();
 board.board = await gameUtils.askUserToSetAlive();
-await gameUtils.runGenerations(board, 20);
+await gameUtils.runGenerations(board, GENERATION_LIMIT);
 
 process.exit(1);
 
