@@ -50,7 +50,6 @@ User Stories:
 
 **METHOD                  ENDPOINT                    PURPOSE**
 ```
--------------------------------------------------------------------------------------------------------
 GET                     /game                       Get the current game state
 POST                    /game/start                 Start generating the game
 POST                    /game/next                  Advance the game one generation, return new state
@@ -62,18 +61,15 @@ GET                     /game/patterns              Get available patterns
 GET                     /game/patterns/:id          Get one pattern
 POST                    /game/patterns              Save a new custom pattern
 DELETE                  /game/patterns/:id          Delete a saved custom pattern
-
 ```
 #### **DEFINITIONS**
 ```
--------------------------------------------------------------------------------------------------------
 game                    represents the current game state
 game/pattern            allows user to upset a specific cell
 game/patterns           represents the list of all pre built patterns
 ```
 #### **PRE-BUILD PATTERNS**
 ```
--------------------------------------------------------------------------------------------------------
 Single cell
 Glider
 Block
