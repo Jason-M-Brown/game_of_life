@@ -1,4 +1,4 @@
-import type {GameBoard} from "../Interfaces/interface_board.js";
+import type {GameBoard} from "../interfaces/interface_board.js";
 
 /*
     EFFECT: Checks if {x, y} is an alive cell

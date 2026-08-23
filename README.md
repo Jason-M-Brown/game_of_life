@@ -31,9 +31,9 @@ custom patterns.
 
 **Phase 3: Develop a MVP terminal based Conway's game of life**
 User Stories:
-- [x] ~~ As a user, I want to be able to select the area of the board between (1 - 9), so I can control how large the simulation is. ~~
-- [x] ~~ As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns ~~
-- [x] ~~ As a user, I want to watch the board update through each generation, so i can observe the simulation working ~~
+- [x] As a user, I want to be able to select the area of the board between (1 - 9), so I can control how large the simulation is.
+- [x] As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns
+- [x] As a user, I want to watch the board update through each generation, so i can observe the simulation working
 
 **Implementation: **
 - Built a `readline` - based prompt system (`promptUntilValid`) with reusable parse/validation callbacks, used for board size, cell coordinates, and yes/no prompts
@@ -41,5 +41,47 @@ User Stories:
 - Cached static output (coordinate legend, whitespace) that doesn't change during a session, while regenerating the dynamic board display every render
 - Ran the simulation loop with `runGenerations`, clearing and redrawing the terminal each generation with a delay between frames
 
-**Phase 4: Turn Terminal Based game into a Node backend**
-**Phase 5: Develope a front end using React**
+**Phase 4: Planning Endpoints**
+- As a user, I would like to select preset layouts in order to better learn the different patterns.
+- As a user, I would like to be able to save my own custom preset games so I can load them later.
+- As a user, start and stop the generation so I can customize mid generation this is so I can unfreeze a forzen state.
+
+Possible HTTP requests:
+
+**METHOD                  ENDPOINT                    PURPOSE**
+-------------------------------------------------------------------------------------------------------
+GET                     /game                       Get the current game state
+POST                    /game/start                 Start generating the game
+POST                    /game/next                  Advance the game one generation, return new state
+POST                    /game/pause                 Pauses the current game
+POST                    /game/pattern               Place a selected pattern at the specified cell
+POST                    /game/reset                 Reset/end the current game
+
+GET                     /game/patterns              Get available patterns
+GET                     /game/patterns/:id          Get one pattern
+POST                    /game/patterns              Save a new custom pattern
+DELETE                  /game/patterns/:id          Delete a saved custom pattern
+
+
+**DEFINITIONS**
+-------------------------------------------------------------------------------------------------------
+game                    represents the current game state
+game/pattern            allows user to upset a specific cell
+game/patterns           represents the list of all pre built patterns
+
+**PRE-BUILD PATTERNS**
+-------------------------------------------------------------------------------------------------------
+Single cell
+Glider
+Block
+Blinker
+Pulsar
+Bomb
+Custom
+
+NOTES: Going to keep patterns simple and only work with a single cell. 
+
+
+**Phase 5: Turn Terminal Based game into a Node backend**
+**Phase 6: Designing layout for frontend**
+**Phase 7: Develope the frontend using `React`**

@@ -1,8 +1,8 @@
-import * as boardUtils from "../terminal_demo/Utils/boardUtils.js"
+import * as boardUtils from "../core/utils/boardUtils.js"
 import fs from "fs/promises";
 import { expect } from "chai";
 //import request from "supertest";
-import type {GameBoard} from "../terminal_demo/Interfaces/interface_board.js"
+import type {GameBoard} from "../core/interfaces/interface_board.js"
 
 
 /* */
