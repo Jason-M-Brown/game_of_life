@@ -49,6 +49,7 @@ User Stories:
 Possible HTTP requests:
 
 **METHOD                  ENDPOINT                    PURPOSE**
+```
 -------------------------------------------------------------------------------------------------------
 GET                     /game                       Get the current game state
 POST                    /game/start                 Start generating the game
@@ -62,14 +63,16 @@ GET                     /game/patterns/:id          Get one pattern
 POST                    /game/patterns              Save a new custom pattern
 DELETE                  /game/patterns/:id          Delete a saved custom pattern
 
-
+```
 **DEFINITIONS**
+```
 -------------------------------------------------------------------------------------------------------
 game                    represents the current game state
 game/pattern            allows user to upset a specific cell
 game/patterns           represents the list of all pre built patterns
-
+```
 **PRE-BUILD PATTERNS**
+```
 -------------------------------------------------------------------------------------------------------
 Single cell
 Glider
@@ -78,10 +81,11 @@ Blinker
 Pulsar
 Bomb
 Custom
-
-NOTES: Going to keep patterns simple and only work with a single cell. 
+```
 
 
 **Phase 5: Turn Terminal Based game into a Node backend**
+
 **Phase 6: Designing layout for frontend**
+
 **Phase 7: Develope the frontend using `React`**
