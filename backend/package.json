@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/index.ts",
+    "dev:backend": "tsx watch src/backend/index.ts",
     "terminal_demo": "tsx src/terminal_demo/main.ts"
+
   },
   "keywords": [],
   "author": "",
