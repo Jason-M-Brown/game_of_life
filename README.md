@@ -19,8 +19,8 @@ MVP, with plans to expand to a Node backend and React frontend.
 
 
 ## Project Goals
-**Phase 1: Plan out required utility functions for data Processing - Done** 
-**Phase 2: Build a test file to verify utility functions work - Done**
+### **Phase 1: Plan out required utility functions for data Processing - Done**
+### **Phase 2: Build a test file to verify utility functions work - Done**
 -  Reduced test duplication using `describe` -scoped fixtures (shared board state via `beforeEach`)
 - Built reusable assertion helpers (`setAliveStates`, `expectBoardHasExactly`, `assertNextGeneration`, `assertNeighborNodesExist`) used across the suite
 - Unit test for every utility function (branch and boundry-value coverage)
@@ -29,7 +29,7 @@ custom patterns.
 - Isolated tests for boundary conditions (board edges/corners) seprate from core rule logic
 - Reusable test helpers to keep setup and assertions DRY across the suite
 
-**Phase 3: Develop a MVP terminal based Conway's game of life**
+### **Phase 3: Develop a MVP terminal based Conway's game of life**
 User Stories:
 - [x] As a user, I want to be able to select the area of the board between (1 - 9), so I can control how large the simulation is.
 - [x] As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns
@@ -41,12 +41,12 @@ User Stories:
 - Cached static output (coordinate legend, whitespace) that doesn't change during a session, while regenerating the dynamic board display every render
 - Ran the simulation loop with `runGenerations`, clearing and redrawing the terminal each generation with a delay between frames
 
-**Phase 4: Planning Endpoints**
+### **Phase 4: Planning Endpoints**
 - As a user, I would like to select preset layouts in order to better learn the different patterns.
 - As a user, I would like to be able to save my own custom preset games so I can load them later.
 - As a user, start and stop the generation so I can customize mid generation this is so I can unfreeze a forzen state.
 
-Possible HTTP requests:
+#### Possible HTTP requests
 
 **METHOD                  ENDPOINT                    PURPOSE**
 ```
@@ -64,14 +64,14 @@ POST                    /game/patterns              Save a new custom pattern
 DELETE                  /game/patterns/:id          Delete a saved custom pattern
 
 ```
-**DEFINITIONS**
+#### **DEFINITIONS**
 ```
 -------------------------------------------------------------------------------------------------------
 game                    represents the current game state
 game/pattern            allows user to upset a specific cell
 game/patterns           represents the list of all pre built patterns
 ```
-**PRE-BUILD PATTERNS**
+#### **PRE-BUILD PATTERNS**
 ```
 -------------------------------------------------------------------------------------------------------
 Single cell
@@ -84,8 +84,8 @@ Custom
 ```
 
 
-**Phase 5: Turn Terminal Based game into a Node backend**
+### **Phase 5: Turn Terminal Based game into a Node backend**
 
-**Phase 6: Designing layout for frontend**
+### **Phase 6: Designing layout for frontend**
 
-**Phase 7: Develope the frontend using `React`**
+### **Phase 7: Develope the frontend using `React`**
