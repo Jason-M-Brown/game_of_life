@@ -31,9 +31,9 @@ custom patterns.
 
 **Phase 3: Develop a MVP terminal based Conway's game of life**
 User Stories:
-- [x] ~~ As a user, I want to be able to select the area of the board between (1 - 9), so I can control how large the simulation is. ~~
-- [x] ~~ As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns ~~
-- [x] ~~ As a user, I want to watch the board update through each generation, so i can observe the simulation working ~~
+- [x] As a user, I want to be able to select the area of the board between (1 - 9), so I can control how large the simulation is.
+- [x] As a user, I want to be able to enter which cells are set alive, so I can generate my own patterns
+- [x] As a user, I want to watch the board update through each generation, so i can observe the simulation working
 
 **Implementation: **
 - Built a `readline` - based prompt system (`promptUntilValid`) with reusable parse/validation callbacks, used for board size, cell coordinates, and yes/no prompts
