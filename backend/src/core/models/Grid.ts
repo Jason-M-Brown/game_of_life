@@ -9,13 +9,13 @@ NOTES: When writting this class I noticed that Pattern is really a type of gameb
 
 export class Grid {
     grid : boolean[][] = [];
-    columns : number;
-    row : number;
+    readonly columns : number;
+    readonly rows : number;
 
-    private static readonly OUT_OF_BOUNDS_ROW = "Row out of Bounds: ";
-    private static readonly OUT_OF_BOUNDS_COL = "Column out of Bounds: ";
-    private static readonly INVALID_HEIGHT = "Invalid Column size";
-    private static readonly INVALID_WIDTH  = "Invalid Row size";
+    private static readonly OUT_OF_BOUNDS_ROW = "Row out of Bounds";
+     private static readonly OUT_OF_BOUNDS_COL = "Columns out of Bounds";
+    private static readonly INVALID_ROW = "Invalid Row size";
+    private static readonly INVALID_COL  = "Invalid Column size";
 
 
     constructor(height: number, columns: number) {
@@ -23,7 +23,7 @@ export class Grid {
         Grid.validateCoordinates(height, columns);
         this.grid = Grid.generateGrid(height, columns);
         this.columns = columns;
-        this.row = height;
+        this.rows = height;
         
     };
 
@@ -33,7 +33,7 @@ export class Grid {
     }
 
     flipState(y: number, x: number) : void {
-        this.getGrid()[y]![x] = !this.getCell(y, x);     
+        this.setCell(y, x, !this.getCell(y, x));   
     }
 
     setCell(y: number, x: number, value: boolean) : void {
@@ -56,17 +56,17 @@ export class Grid {
 
     private static validateBounds(grid: Grid, y: number, x: number) : void {
         Grid.validateRowInBounds(grid, y);
-        Grid.validateColumnInBounds(grid, y, x);
+        Grid.validateColumnInBounds(grid, x);
 
     }
 
-    private static validateRowInBounds(grid  :Grid, y: number) : void {
-        if(y < 0 || y >= grid.row) {
+    private static validateRowInBounds(grid  :Grid, size: number) : void {
+        if(size < 0 || size >= grid.rows) {
             throw new Error(Grid.OUT_OF_BOUNDS_ROW);
         }
     }
 
-    private static validateColumnInBounds(grid: Grid, y:number, x:number) : void {
+    private static validateColumnInBounds(grid: Grid, x:number) : void {
         if(x < 0 || x >= grid.columns) {
             throw new Error(Grid.OUT_OF_BOUNDS_COL);
         }
@@ -84,11 +84,11 @@ export class Grid {
 
     private static validateCoordinates(height: number, width: number) : void {
         if(height <= 0 || !Number.isInteger(height)) {
-            throw new Error(Grid.INVALID_HEIGHT);
+            throw new Error(Grid.INVALID_ROW);
         }
 
         if(width <= 0 || !Number.isInteger(width)) {
-            throw new Error(Grid.INVALID_WIDTH);
+            throw new Error(Grid.INVALID_COL);
         }
         
     };
