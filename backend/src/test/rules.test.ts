@@ -1,4 +1,4 @@
-import * as boardUtils from "../core/utils/boardUtils.js"
+import * as boardUtils from "../core/rules/gameRules.js"
 import fs from "fs/promises";
 import { expect } from "chai";
 //import request from "supertest";
