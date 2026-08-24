@@ -1,15 +1,23 @@
-export class Pattern {
+/*
+NOTES: When writting this class I noticed that Pattern is really a type of gameboard, but I do not want to 
+       run this object. Maybe I should turn boardUtils into a class and abstract away the common behaviours
+       this way both Patterns and boardUtils can use the same underlined logic. 
+
+       Patterns has a harder requirement, so I have to be careful not to break liskov principle. 
+*/
+
+export class Grid {
     grid : boolean[][] = [];
 
     constructor(size: number) {
 
-        checkIfOddSize(size);
-        this.grid = generateGrid(size);
+        Grid.checkIfOddSize(size);
+        this.grid = Grid.generateGrid(size);
     };
 
     //Checks to see if size is a valid input
     private static checkIfOddSize(size: number): void {
-        if(size <= 1 || size % 2 === 0 || Number.isInteger(size)) {
+        if(!Number.isInteger(size) || size <= 0 || size % 2 == 0) {
             throw new Error("Pattern size must be a positive odd Number");
         };
     };
@@ -25,6 +33,10 @@ export class Pattern {
     };
 };
 
+// EFFECT: takes a set of coordinates, and turns 
+function setAllStates(grid: Grid, coordinates :Set<string>, state: boolean) {
+
+}
 
 
 
