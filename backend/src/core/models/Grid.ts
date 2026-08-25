@@ -36,8 +36,18 @@ export abstract class Grid {
         }
     }
 
+    deleteCell(num: number) : void {
+        this.validateCell(num);
+        this.grid.delete(num);
+    };
+
     getGrid() : ReadonlySet<number> {
         return this.grid;
+    }
+
+    has(num: number) : boolean {
+        this.validateCell(num);
+        return this.grid.has(num);
     }
 
 
@@ -49,9 +59,6 @@ export abstract class Grid {
 
 
      // Private functions //
-    private deleteCell(num: number) : void {
-        this.grid.delete(num);
-    };
 
     private addCell(num: number) : void {
         this.grid.add(num);
