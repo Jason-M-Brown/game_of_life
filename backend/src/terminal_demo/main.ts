@@ -1,5 +1,5 @@
 import * as gameUtils from "./Utils/gameUtils.js"
-import type {GameBoard} from "../core/interfaces/interface_board.js"
+import type {GameBoard} from "../core/types.js"
 
 //import * as gameUtils from "./utils_Game.js";
 

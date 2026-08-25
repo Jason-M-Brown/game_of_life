@@ -1,7 +1,7 @@
 import * as consoleDisplay from "../display.js";
 import {print, waitForKey, waitForBoardSize, getUserCords, askChangeState} from "./consoleUtils.js";
 import {parseKey, generateNextState} from "../../core/rules/gameRules.js";
-import type {GameBoard} from "../../core/interfaces/interface_board.js"
+import type {GameBoard} from "../../core/types.js"
 
 let SIZE: number;
 

@@ -2,7 +2,7 @@ import * as boardUtils from "../core/rules/gameRules.js"
 import fs from "fs/promises";
 import { expect } from "chai";
 //import request from "supertest";
-import type {GameBoard} from "../core/interfaces/interface_board.js"
+import type {GameBoard} from "../core/types.js"
 
 
 /* */

@@ -1,34 +1,57 @@
-export function stringToCoord(str: string) :  {x: number, y:number} {
-    const parts = str.split(",");
+import type { Coords } from "../types.js";
 
-    isCorrectInput(parts);
+const INVALID_DIMENSION = "Value provided must be a positive Integer";
+const INVALID_INDEX = "Value provided must be a non-negative Integer";
 
-    const x = Number(parts[0]);
-    const y = Number(parts[1]);
+export function decode(num: number, col: number): Coords {
+    isValidIndex(num);
+    isValidDimension(col);
 
-    isNumber(x, y);
+    return generateCoords(num, col);
+};
 
-    return {x, y};
+export function encode(coord: Coords, col: number): number {
+    isValidIndex(coord.x);
+    isValidIndex(coord.y);
+    isValidDimension(col);
 
-    
-}
-
-export function coordToString(x: number, y: number) : string {
-    return `${x},${y}`;
-}
-
+    return coord.y * col + coord.x;
+};
 
 /*
-    Helpers
+    Private Helpers
 */
-function isCorrectInput(parts: any) {
-    if(parts.length !== 2) {
-        throw new Error(`Could not parse coordinates expected "x,y", got "${parts}"`)
-    }
-}
 
-function isNumber(x: any, y:any) {
-    if(Number.isNaN(x) || Number.isNaN(y)) {
-        throw new Error(`Could not parase coordinate: "${x},${y}" is not numeric`)
-    }
-}
+function generateCoords(num: number, col: number): Coords {
+    return {
+        x: generateX(num, col),
+        y: generateY(num, col),
+    };
+};
+
+function generateX(num: number, col: number): number {
+    return num % col;
+};
+
+function generateY(num: number, col: number): number {
+    return Math.floor(num / col);
+};
+
+function isValidIndex(num: number): void {
+    if (!Number.isInteger(num) || num < 0) {
+        throw new Error(INVALID_INDEX);
+    };
+};
+
+function isValidDimension(num: number): void {
+    if (!Number.isInteger(num) || num <= 0) {
+        throw new Error(INVALID_DIMENSION);
+    };
+};
+
+
+
+
+
+
+

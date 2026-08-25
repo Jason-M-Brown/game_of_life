@@ -5,3 +5,8 @@ export type GameBoard = {
     width: number,
     board: Set<string>,
 } 
+
+export type Coords = {
+    x: number,
+    y: number
+}
