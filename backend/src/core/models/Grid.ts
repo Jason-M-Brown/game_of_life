@@ -1,3 +1,4 @@
+import type {Coords} from "../types.js";
 
 export abstract class Grid {
     private grid : Set<number>;
@@ -20,6 +21,10 @@ export abstract class Grid {
     abstract clone(): Grid;
     protected abstract validate(rows: number, columns :number): void;
     
+    addCell(num: number) : void {
+        this.validateCell(num);
+        this.grid.add(num);
+    };
 
     isCellAlive(num: number) : boolean {
         this.validateCell(num);
@@ -27,8 +32,6 @@ export abstract class Grid {
     }
 
     toggleCell(num: number) : void {
-        this.validateCell(num);
-
         if(this.isCellAlive(num)) {
             this.deleteCell(num);
         } else {
@@ -50,6 +53,13 @@ export abstract class Grid {
         return this.grid.has(num);
     }
 
+    updateGridCells(cells : Set<number>) {
+        this.grid.clear();
+        for(const nextCell of cells) {
+            this.addCell(nextCell);
+        }
+    }
+
 
 
     // Protected Functions //
@@ -57,18 +67,14 @@ export abstract class Grid {
         clone.grid = new Set(this.grid);
     };
 
-
-     // Private functions //
-
-    private addCell(num: number) : void {
-        this.grid.add(num);
-    };
-
-    private validateCell(num: number) {
+    protected validateCell(num: number) {
         if (!Number.isInteger(num) || num < 0 || num >= this.getMaxSize()) {
             throw new Error(Grid.INVALID_TOGGLE)
         };
     };
+
+
+     // Private functions //
 
     private getMaxSize() : number {
         return this.rows * this.columns;

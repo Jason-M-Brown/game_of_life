@@ -18,6 +18,16 @@ export function encode(coord: Coords, col: number): number {
     return coord.y * col + coord.x;
 };
 
+
+export function getOffsetCoords(coords: Coords, dy: number, dx: number) : Coords {
+    const offset : Coords = {
+        y: coords.y + dy,
+        x: coords.x + dx
+    }
+
+    return offset;
+}
+
 /*
     Private Helpers
 */

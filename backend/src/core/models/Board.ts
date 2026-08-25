@@ -1,4 +1,6 @@
-import { Grid } from "./grid.js";
+import { Grid } from "./Grid.js";
+import { updateState } from "./GameRules.js"
+import type { BoardState } from "../interfaces.js"
 
 export class Board extends Grid {
 
@@ -15,17 +17,33 @@ export class Board extends Grid {
     }
 
     //Takes current board and generates the next board
-    generateNext(): void {
-
-    }
+    generateNextState(): void {
+        const newState : Set<number> = updateState(this.buildBoardState());
+        this.updateGridCells(newState);
+    };
 
     //EFFECT: allows user to place a pattern at x, y by using a Pattern
     placePattern(): void {
 
-    }
+    };
 
+    // Protected 
 
     protected validate(rows: number, columns: number): void {
         return;
-    }
-}
+    };
+
+    // Private
+    private buildBoardState() : BoardState {
+        const state : BoardState = {
+            activeCells: this.getGrid(),
+            columnSize: this.columns,
+            rowSize:  this.rows
+        };
+        return state;
+    };
+
+
+
+
+};

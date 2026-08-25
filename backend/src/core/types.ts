@@ -10,3 +10,8 @@ export type Coords = {
     x: number,
     y: number
 }
+
+export type TransitionStates = {
+    born: Set<number>
+    dead: Set<number>
+}
