@@ -3,6 +3,10 @@ A TypeScript implementation of Conway's Game of Life, built with an emphasis on
 thorough, hand-verified unit and integration testing. Currently a terminal-based
 MVP, with plans to expand to a Node backend and React frontend.
 
+## Issues
+
+The simulation runs entirely client-side to avoid network round-trip latency between generations. The backend provides a REST API for persistence operations such as creating, retrieving, and deleting saved boards, but is not involved in the real-time simulation loop.
+
 ## Setup
 
 ## Tech Stack
