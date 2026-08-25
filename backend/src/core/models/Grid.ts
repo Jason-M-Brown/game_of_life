@@ -10,13 +10,16 @@ export abstract class Grid {
 
     constructor(rows: number, columns: number) {
         Grid.validateBounds(rows, columns);
-        this.grid = new Set<number>;
+        this.validate(rows, columns);
+        this.grid = new Set<number>();
 
         this.rows = rows;
         this.columns = columns;
     };
 
     abstract clone(): Grid;
+    protected abstract validate(rows: number, columns :number): void;
+    
 
     isCellAlive(num: number) : boolean {
         this.validateCell(num);
@@ -33,10 +36,14 @@ export abstract class Grid {
         }
     }
 
+    getGrid() : ReadonlySet<number> {
+        return this.grid;
+    }
+
 
 
     // Protected Functions //
-    protected copyStates(clone: Grid) : Grid {
+    protected copyStates(clone: Grid) : void {
         clone.grid = new Set(this.grid);
     };
 
