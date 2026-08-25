@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import * as boardUtils from "../core/rules/gameRules.js"
+import * as boardUtils from "../terminal_demo/rules/gameRules.js"
 import gameRouter from "./routers/gameRouter.js";
 import patternRouter from "./routers/patternRouter.js"
 
