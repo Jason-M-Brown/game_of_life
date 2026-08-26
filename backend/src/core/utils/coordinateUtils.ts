@@ -4,7 +4,6 @@ import type { GridState } from "../interfaces.js"
 const INVALID_DIMENSION = "Value provided must be a positive Integer";
 const INVALID_INDEX = "Value provided must be a non-negative Integer";
 
-
 export function decode(num: number, col: number): Coords {
     isValidIndex(num);
     isValidDimension(col);
@@ -41,42 +40,12 @@ export function resolvePatternPlacement(patternState: GridState, location: numbe
     return result;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export function applyDelta(coord: Coords, dx: number, dy: number) {
+    return generateCoords(
+        () => coord.x + dx,
+        () => coord.y + dy
+    );
+};
 
 /*
     Private Helpers
@@ -105,10 +74,6 @@ function getOffsetToApply(boardLocation: Coords, nextCoord: Coords) : Coords {
         () => boardLocation.y + nextCoord.y
     );
 };
-
-
-
-
 
 function generateOffsetCoords(location: Coords, center: Coords) : Coords {
    return generateCoords(

@@ -1,7 +1,7 @@
 
 import type { Coords } from "../types.js";
 import type { BoardState } from "../interfaces.js"
-import { decode, encode, getOffsetCoords } from "../utils/coordinateUtils.js";
+import { decode, encode, applyDelta } from "../utils/coordinateUtils.js";
 
 // Export Functions 
 export function updateState(state: BoardState) : Set<number> {
@@ -10,7 +10,9 @@ export function updateState(state: BoardState) : Set<number> {
     return nextGeneration(state, candidateCells);
 };
 
-/* HELPER - getCandidateCells*/
+
+
+// Helper Functions //
 function getCandidateCells(boardState: BoardState) : Set<number> {
 
     const candidateCells = new Set<number>();
@@ -26,7 +28,7 @@ function loopOverNeighbours(boardState: BoardState, nextAliveCell: number, candi
     const coords = decode(nextAliveCell, boardState.columnSize);
      for(let dy = -1; dy <= 1; dy++) {
         for(let dx = -1; dx <= 1; dx++) {
-            const offsetCoords = getOffsetCoords(coords, dy, dx)
+            const offsetCoords = applyDelta(coords, dy, dx)
             if(isInsideGrid(boardState, offsetCoords)) {
                 candidateCells.add(encode(offsetCoords, boardState.columnSize))
             };
@@ -44,7 +46,6 @@ function isInsideGrid(boardState: BoardState, offsetCoords: Coords) : boolean {
     return true;
 };
 
-/* HELPERS - nextGeneration*/
 function nextGeneration(boardState: BoardState, candidateCells: Set<number>) : Set<number>{
     const nextAliveCells = new Set<number>();
 
@@ -62,7 +63,7 @@ function countAliveNeighbours(boardState: BoardState, coords: Coords) : number {
     let count = 0;
     for(let dy = -1; dy <= 1; dy++) {
         for(let dx = -1; dx <= 1; dx++) {
-            const offsetCoords = getOffsetCoords(coords , dy, dx);
+            const offsetCoords = applyDelta(coords , dy, dx);
 
             if(lookingAtSelf(dx, dy)) {
                 continue;

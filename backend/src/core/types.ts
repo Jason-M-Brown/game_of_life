@@ -15,3 +15,8 @@ export type TransitionStates = {
     born: Set<number>
     dead: Set<number>
 }
+
+export type PlacementCell = {
+        index: number, 
+        alive: boolean
+}
