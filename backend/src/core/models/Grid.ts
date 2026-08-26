@@ -20,6 +20,7 @@ export abstract class Grid {
 
     //Might delete this and put it in Pattern only
     abstract clone(): Grid;
+
     protected abstract validate(rows: number, columns :number): void;
     
     addCell(num: number) : void {
@@ -43,12 +44,11 @@ export abstract class Grid {
         return this.grid.has(num);
     }
 
-
+    */
     deleteCell(num: number) : void {
         this.validateCell(num);
         this.grid.delete(num);
     };
-    */
 
     getGrid() : ReadonlySet<number> {
         return this.grid;
@@ -60,6 +60,10 @@ export abstract class Grid {
             this.addCell(nextCell);
         }
     }
+
+    getMaxSize() : number {
+        return this.rows * this.columns;
+    };
 
 
 
@@ -73,10 +77,6 @@ export abstract class Grid {
         if (!Number.isInteger(num) || num < 0 || num >= this.getMaxSize()) {
             throw new Error(Grid.INVALID_TOGGLE)
         };
-    };
-
-    protected getMaxSize() : number {
-        return this.rows * this.columns;
     };
 
 
