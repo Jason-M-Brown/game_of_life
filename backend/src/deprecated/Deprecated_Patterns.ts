@@ -1,5 +1,5 @@
 import {Grid} from "./Deprecated_Grid.js"
-import {stringToCoord} from "../utils/Deprecated_coordinateUtils.js"
+import {stringToCoord} from "./Deprecated_coordinateUtils.js"
 
 export class Pattern extends Grid {
 

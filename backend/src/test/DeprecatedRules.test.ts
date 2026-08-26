@@ -9,7 +9,7 @@ import type {GameBoard} from "../core/types.js"
 
 
 
-describe("Utils_Board v1", function() {
+describe("GameRules v1", function() {
 
     let gameBoard : GameBoard;
     let gameBoardSizeOne : GameBoard

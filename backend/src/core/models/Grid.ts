@@ -18,6 +18,7 @@ export abstract class Grid {
         this.columns = columns;
     };
 
+    //Might delete this and put it in Pattern only
     abstract clone(): Grid;
     protected abstract validate(rows: number, columns :number): void;
     
@@ -26,11 +27,8 @@ export abstract class Grid {
         this.grid.add(num);
     };
 
-    isCellAlive(num: number) : boolean {
-        this.validateCell(num);
-        return this.grid.has(num);
-    }
-
+    /*
+    //Might delete and move to Pattern only
     toggleCell(num: number) : void {
         if(this.isCellAlive(num)) {
             this.deleteCell(num);
@@ -39,18 +37,21 @@ export abstract class Grid {
         }
     }
 
+    //If i delete toggleCell, then delete this
+    iisCellAlive(num: number) : boolean {
+        this.validateCell(num);
+        return this.grid.has(num);
+    }
+
+
     deleteCell(num: number) : void {
         this.validateCell(num);
         this.grid.delete(num);
     };
+    */
 
     getGrid() : ReadonlySet<number> {
         return this.grid;
-    }
-
-    has(num: number) : boolean {
-        this.validateCell(num);
-        return this.grid.has(num);
     }
 
     updateGridCells(cells : Set<number>) {
@@ -63,6 +64,7 @@ export abstract class Grid {
 
 
     // Protected Functions //
+    //Might delete and move to pattern only
     protected copyStates(clone: Grid) : void {
         clone.grid = new Set(this.grid);
     };
@@ -73,12 +75,12 @@ export abstract class Grid {
         };
     };
 
-
-     // Private functions //
-
-    private getMaxSize() : number {
+    protected getMaxSize() : number {
         return this.rows * this.columns;
     };
+
+
+     // Private functions //
 
     private static validateBounds(y: number, x: number) : void {
         Grid.validateValue(y);
@@ -86,7 +88,7 @@ export abstract class Grid {
     };
 
     private static validateValue(value: number) : void {
-        if(!Number.isInteger(value) || value <= 1) {
+        if(!Number.isInteger(value) || value < 1) {
             throw new Error(Grid.INVALID_VALUE);
         };
     };

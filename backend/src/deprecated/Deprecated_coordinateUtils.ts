@@ -1,4 +1,4 @@
-export function stringToCord(str: string) :  {x: number, y:number} {
+export function stringToCoord(str: string) :  {x: number, y:number} {
     const parts = str.split(",");
 
     isCorrectInput(parts);
