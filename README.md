@@ -10,10 +10,25 @@ The simulation runs entirely client-side to avoid network round-trip latency bet
 ## Setup
 
 ## Tech Stack
-- TypeScrypt
+## Tech Stack
+
+**Languages**
+- TypeScript
+
+**Backend**
+- Node.js
+- Express
+
+**Frontend**
+- React
+
+**Testing**
 - Mocha
 - Chai
 - c8
+
+**Tools**
+- Git
 
 ## Status Update
 - Phase 1: Completed : Unknown
@@ -45,7 +60,7 @@ User Stories:
 - Cached static output (coordinate legend, whitespace) that doesn't change during a session, while regenerating the dynamic board display every render
 - Ran the simulation loop with `runGenerations`, clearing and redrawing the terminal each generation with a delay between frames
 
-### **Phase 4: Planning Endpoints** [x]
+### **Phase 4: API Design** [x]
 - As a user, I would like to select preset layouts in order to better learn the different patterns.
 - As a user, I would like to be able to save my own custom preset games so I can load them later.
 - As a user, start and stop the generation so I can customize mid generation this is so I can unfreeze a forzen state.
@@ -82,10 +97,41 @@ Pulsar
 Bomb
 Custom
 ```
+### **Phase 5: Object-Oriented Architecture & Optimization** [x]
+
+#### **Design Choices - Abstraction**
+
+While designing how patterns would be represented and placed on the board, I noticed that the `Pattern` class shared much of the same functionality that would be required by the `Board` class. Rather than duplicating this logic, I recognized an opportunity to **abstract their shared functionality** into an abstract `Grid` class.
+
+The `Grid` class now provides the common functionality required by both `Board` and `Pattern`, including **cell management, grid dimensions, and coordinate validation**. `Board` and `Pattern` extend `Grid` while remaining responsible for enforcing their own **domain-specific rules**.
+
+For example, both `Board` and `Pattern` require their own validation logic when being constructed. The shared `Grid` constructor establishes the common grid state, while each subclass can **define and enforce its own construction requirements**.
+
+This approach allows me to **reuse common functionality without tightly coupling `Board` and `Pattern`**, while keeping each class responsible for the rules specific to its purpose.
+
+#### **Design Choices - Representing Data**
+
+When building the MVP, I initially used a `Set<string>` to represent active cells because the application was terminal-based and I only needed a simple way to track cell coordinates. However, as the project evolved toward a **modular, object-oriented architecture**, this representation became unnecessarily expensive and difficult to work with.
+
+I initially considered using a `boolean[][]` to represent the grid. While this provided straightforward access to individual cells, it required storing a value for **every cell**, including cells that were known to be dead. For a sparse board, this resulted in significant redundant data. If I already knew which cells were alive, I did not need to explicitly store every dead cell.
+
+I therefore changed the representation to a `Set<number>`, where each active cell is represented by a single integer. To convert between the integer representation and 2D coordinates, I implemented a **bijective coordinate mapping** based on the board's column count. This allows coordinates to be encoded as a single integer and decoded back into `(x, y)` coordinates when required.
+
+This representation provides **O(1)-average cell lookups** through `Set.has()` while significantly reducing the amount of state that must be stored for sparse boards. It also separates the **storage representation** from the 2D coordinate system used by the rest of the application, allowing the underlying data structure to remain compact without sacrificing the ability to work with conventional grid coordinates.
+
+#### **Design Choice - architecture decisions**
+
+While implementing pattern placement, I initially coupled the Board class directly to the coordinate and pattern-resolution logic. After getting the feature working, I recognized that Board only needs to apply the resulting cell updates, not know how those updates are calculated.
+
+I separated the placement logic into a standalone utility and introduced a GridState interface containing only the information required to resolve a pattern's placement. This decouples the utility layer from the concrete Board and Pattern classes and allows the coordinate logic to be tested independently.
+
+I deliberately kept the interface minimal by exposing a has(index) operation rather than the underlying cell set, avoiding unnecessary access to internal state.
+
+Result: A more modular architecture with lower coupling, clearer responsibilities, and independently testable coordinate and placement logic.
 
 
-### **Phase 5: Turn Terminal Based game into a Node backend** []
+### **Phase 6: Turn Terminal Based game into a Node backend** []
 
-### **Phase 6: Designing layout for frontend** []
+### **Phase 7: Designing layout for frontend** []
 
-### **Phase 7: Develope the frontend using `React`** []
+### **Phase 8: Develope the frontend using `React`** []
