@@ -31,10 +31,11 @@ The simulation runs entirely client-side to avoid network round-trip latency bet
 - Git
 
 ## Status Update
-- Phase 1: Completed : Unknown
+- Phase 1: Completed :
 - Phase 2: Completed : 2026-08-20
 - Phase 3: Completed : 2026-08-21
-- Phase 4: Working on
+- Phase 4: Delayed 
+- Phase 5: Completed : 2026-08-26
 
 
 ## Project Goals
@@ -128,6 +129,17 @@ I separated the placement logic into a standalone utility and introduced a GridS
 I deliberately kept the interface minimal by exposing a has(index) operation rather than the underlying cell set, avoiding unnecessary access to internal state.
 
 Result: A more modular architecture with lower coupling, clearer responsibilities, and independently testable coordinate and placement logic.
+
+### **Phase 6: Backend API Layer design**
+TODO: 
+- GameEngine service 
+- Board Serialization
+- In memory store 
+- Express routes
+- Build Pattern Library 
+- Decide and build a run loop model
+- Error handling (maybe)
+- Input validation 
 
 
 ### **Phase 6: Turn Terminal Based game into a Node backend** []
