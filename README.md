@@ -10,7 +10,6 @@ The simulation runs entirely client-side to avoid network round-trip latency bet
 ## Setup
 
 ## Tech Stack
-## Tech Stack
 
 **Languages**
 - TypeScript
