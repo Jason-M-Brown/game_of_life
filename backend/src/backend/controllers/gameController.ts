@@ -1,32 +1,20 @@
 
+/*
+import { Request, Response } from "express";
 
-//Get current game state
-export async function getGame(req, res) : Promise<void> {
+import { Board } from "../../core/models/Board.js";
+import { Pattern } from "../../core/models/Patterns.js"
 
-};
+let board = new Board(20, 20);
+let tickInterval: NodeJS.Timeout | null = null;
+
+export async function getGame(req: Request, res: Response): Promise<Void> {
+
+}
 
 
-//Start generating states
-export async function startGame(req, res) : Promise<void> {
+export async function getGame(req: Request, res: Response): Promise<void> {
+res.json(board.toJSON());
+}
 
-};
-
-//Advance game by one generation
-export async function nextGeneration(req, res) : Promise<void> {
-
-};
-
-//Pause game
-export async function pauseGame(req, res) : Promise<void> {
-
-};
-
-//Update current cell
-export async function updateCell(req, res) : Promise<void> {
-
-};
-
-//Reset game state to default
-export async function resetGame(req, res) : Promise<void> {
-
-};
+*/

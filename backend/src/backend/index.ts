@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import * as boardUtils from "../terminal_demo/rules/gameRules.js"
 import gameRouter from "./routers/gameRouter.js";
 import patternRouter from "./routers/patternRouter.js"
 
@@ -12,8 +11,8 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/game", gameRouter);
-app.use("/game/patterns", patternRouter);
+app.use("/api/board", gameRouter);
+app.use("/api/patterns", patternRouter);
 
 app.get("/health", (req, res) => {
   res.json({status: "ok"});

@@ -20,3 +20,9 @@ export type PlacementCell = {
         index: number, 
         alive: boolean
 }
+
+export type toJSON = {
+    rows: number,
+    columns: number,
+    aliveCells: number[];
+}

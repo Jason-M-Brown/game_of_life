@@ -1,4 +1,4 @@
-import type {Coords} from "../types.js";
+import type {toJSON} from "../types.js";
 
 export abstract class Grid {
     private grid : Set<number>;
@@ -28,23 +28,6 @@ export abstract class Grid {
         this.grid.add(num);
     };
 
-    /*
-    //Might delete and move to Pattern only
-    toggleCell(num: number) : void {
-        if(this.isCellAlive(num)) {
-            this.deleteCell(num);
-        } else {
-            this.addCell(num);
-        }
-    }
-
-    //If i delete toggleCell, then delete this
-    iisCellAlive(num: number) : boolean {
-        this.validateCell(num);
-        return this.grid.has(num);
-    }
-
-    */
     deleteCell(num: number) : void {
         this.validateCell(num);
         this.grid.delete(num);
@@ -64,6 +47,15 @@ export abstract class Grid {
     getMaxSize() : number {
         return this.rows * this.columns;
     };
+
+
+    toJSON(): toJSON {
+        return {
+            rows: this.rows,
+            columns: this.columns,
+            aliveCells: Array.from(this.getGrid())
+        }
+    }
 
 
 

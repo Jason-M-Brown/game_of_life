@@ -39,21 +39,6 @@ export class Board extends Grid {
         };
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Protected 
     protected validate(rows: number, columns: number): void {
         return;
