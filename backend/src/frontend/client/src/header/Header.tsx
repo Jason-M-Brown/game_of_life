@@ -1,9 +1,16 @@
+import Title from "./Title"
+import Logo from "./Logo"
+
+import "./Header.css"
+
 function Header() {
     return (
-    <header>
-        <h3>Conway's</h3>
-        <h2>Game of Life</h2>
-    </header>
+        <>
+        <header className="header">
+            <Logo></Logo>
+            <Title></Title>
+        </header>
+        </>
     );
 };
 

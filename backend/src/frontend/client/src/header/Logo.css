@@ -1,0 +1,12 @@
+.logoContainer {
+    width: 7vw ;
+    height: 8vw;
+    overflow: hidden;
+
+}
+
+.Logo {
+    width: 9vw ;
+    height: 10vw;
+    transform: translate(-7px, 15px);
+}

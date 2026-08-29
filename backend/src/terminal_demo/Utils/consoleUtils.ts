@@ -28,8 +28,8 @@ export async function getUserCords(question: string, max:number): Promise<string
   const isValidDev = (value:string) => devPattern.test(value);
 
   //TO DO: DEV UPDATE
-  //return promptUntilValid(question, toString, isValidDev)
-  return promptUntilValid(question, toString, (value) => coordPattern.test(value))
+  return promptUntilValid(question, toString, isValidDev)
+  //return promptUntilValid(question, toString, (value) => coordPattern.test(value))
 }
 
 /*
@@ -41,8 +41,8 @@ export async function waitForBoardSize(question: string) : Promise<number> {
   const toNumber = (input:string) => Number(input);
   
   //TO DO: DEV UPDATE
-  //return promptUntilValid(question, toNumber, isValidDev);
-  return promptUntilValid(question, toNumber, isValid);
+  return promptUntilValid(question, toNumber, isValidDev);
+  //return promptUntilValid(question, toNumber, isValid);
 }
 
 /*
