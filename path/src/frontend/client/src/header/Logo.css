@@ -1,0 +1,19 @@
+
+.logoContainer {
+    width: 8vw;
+    height: 9vw;
+ 
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(0vw, 1vw);
+}
+.Logo {
+
+    width: 12vw ;
+    height: 14vw;
+    transform: translate(0vw, 2.1vw);
+
+}

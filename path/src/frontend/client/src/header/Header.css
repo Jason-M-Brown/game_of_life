@@ -1,0 +1,14 @@
+:root {
+    --text-colour: rgb(255, 255, 255);
+    --background-color: #1f0b2b;   
+    --line-color: #6b527a;  
+}
+
+.header {
+    color: var(--text-colour);
+    background-color: var(--background-color);
+    display: flex;
+    border-radius: 15px 12px 0 0;
+    border-bottom: 4px solid var(--line-color);
+    
+}
