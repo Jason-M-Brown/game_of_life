@@ -4,7 +4,15 @@ import PlayButton from "./Buttons/PlayButton"
 import PauseButton from "./Buttons/PauseButton"
 import ResetButton from "./Buttons/ResetButton";
 import StepButton from "./Buttons/StepButton";
-import GridSize from "./GridSize"
+import GridSize from "../GridSize"
+
+type ActiveButton = "play" | "pause" |  null;
+interface OptionsPanelProps {
+    gridWidth: number;
+    gridHeight: number;
+    onGridWidthChange: (width: number) => void;
+    onGridHeightChange: (height: number) => void;
+}
 
 const panelStyle : React.CSSProperties = {
     backgroundColor: "rgb(49, 12, 70)",
@@ -16,10 +24,15 @@ const panelStyle : React.CSSProperties = {
     boxSizing: "border-box",
 };
 
-type ActiveButton = "play" | "pause" |  null;
+function OptionsPanel({
+    gridWidth,
+    gridHeight,
+    onGridWidthChange,
+    onGridHeightChange,
+    }: OptionsPanelProps) {
 
-function OptionsPanel() {
     const [activeButton, setActiveButton] = useState<ActiveButton>(null);
+
     return (
         <main style={panelStyle}>
             <PlayButton
@@ -33,6 +46,16 @@ function OptionsPanel() {
             />
 
             <StepButton/>
+
+            <GridSize
+                width={gridWidth}
+                height={gridHeight}
+                onWidthChange={onGridWidthChange}
+                onHeightChange={onGridHeightChange}
+            />
+
+            
+
             <ResetButton/>
 
 
