@@ -1,28 +1,18 @@
-import ToggleButton from "../interface/ToggleButton"
+import MomentButton from "../interface/MomentButton"
 
-interface ResetButtonProps {
-    isActive: boolean;
-    onActivate: () => void;
-}
+
 
 //TO DO: Attach what to do when clicked here
-async function callPlayBackend() {
+async function callResetBackend() {
 
 }
 
-function ResetButton({isActive, onActivate}: ResetButtonProps) {
-    const handleClick = () => {
-        onActivate();
-        callPlayBackend();
-    };
-    
-    
+function ResetButton() {
     return (
-        <ToggleButton 
-            lable="Reset" 
-            isActive={isActive}
-            onActivate={handleClick}
-            />
+        <MomentButton 
+        label="Reset" 
+        onTrigger={callResetBackend} 
+        />
     );
 };
 

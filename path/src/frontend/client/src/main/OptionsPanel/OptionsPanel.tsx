@@ -16,12 +16,11 @@ const panelStyle : React.CSSProperties = {
     boxSizing: "border-box",
 };
 
-type ActiveButton = "play" | "pause" | "step" | "reset" | null;
+type ActiveButton = "play" | "pause" |  null;
 
 function OptionsPanel() {
     const [activeButton, setActiveButton] = useState<ActiveButton>(null);
     return (
-        <>
         <main style={panelStyle}>
             <PlayButton
                 isActive={activeButton === "play"}
@@ -33,20 +32,11 @@ function OptionsPanel() {
                 onActivate={() => setActiveButton("pause")}  
             />
 
-            <StepButton
-                isActive={activeButton === "step"}
-                onActivate={() => setActiveButton("step")}
-            />
+            <StepButton/>
+            <ResetButton/>
 
-
-
-            <ResetButton
-                isActive={activeButton === "reset"}
-                onActivate={() => setActiveButton("reset")}
-            />
 
         </main>
-        </>
     );
 };
 

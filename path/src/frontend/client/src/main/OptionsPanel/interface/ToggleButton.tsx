@@ -9,9 +9,9 @@ export interface ToggleButtonProps {
     activeColor?: string;
 }
 
-const DEFAULT_BASE   = "rgb(114, 52, 118)";
-const DEFAULT_HOVER  = "rgb(1, 255, 242)";
-const DEFAULT_ACTIVE = "rgb(237, 0, 0)";
+const DEFAULT_BASE = "rgb(80, 30, 110)";
+const DEFAULT_HOVER = "rgb(110, 50, 150)";
+const DEFAULT_ACTIVE = "rgb(150, 0, 237)";
 
 function ToggleButton({
     lable,
@@ -28,14 +28,27 @@ function ToggleButton({
             ? hoverColor: baseColor;
 
         const style: React.CSSProperties = {
+            //Style Box
             backgroundColor,
+            width: "95%",
+            height: "10%",
+            boxSizing: "border-box",
+            display: "flex",
+
+
+            //Style Text
             color: "white",
-            border: "none",
-            borderRadius: "6px",
-            padding: "10px 16px",
-            margin: "4px",
+
+            //Location
+            justifyContent: "center",
+            flexDirection: "column",
+            gap: "8px",
+            margin: "3%",
             cursor: "pointer",
-            transition: "background-color 0.15s ease-in-out",
+
+            //Transition
+            transition: "background-color 0.20s ease-in-out",
+
         };
 
         return (

@@ -1,28 +1,17 @@
-import ToggleButton from "../interface/ToggleButton"
+import MomentButton from "../interface/MomentButton"
 
-interface StepButtonProps {
-    isActive: boolean;
-    onActivate: () => void;
-}
 
 //TO DO: Attach what to do when clicked here
-async function callPlayBackend() {
+async function callStepBackend() {
 
 }
 
-function StepButton({isActive, onActivate}: StepButtonProps) {
-    const handleClick = () => {
-        onActivate();
-        callPlayBackend();
-    };
-    
-    
+function StepButton() {   
     return (
-        <ToggleButton 
-            lable="Step" 
-            isActive={isActive}
-            onActivate={handleClick}
-            />
+        <MomentButton
+        label="Step" 
+        onTrigger={callStepBackend} 
+        />
     );
 };
 
