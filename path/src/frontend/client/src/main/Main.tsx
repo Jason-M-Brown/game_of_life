@@ -1,7 +1,7 @@
-import BoardPanel from "./BoardPanel";
+import BoardPanel from "./BoardPanel/BoardPanel";
 import "./Main.css"
 
-import OptionsPanel from "./OptionsPanel"
+import OptionsPanel from "./OptionsPanel/OptionsPanel"
 
 function main() {
     return (
