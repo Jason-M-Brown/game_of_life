@@ -13,7 +13,7 @@ function BoardPanel() {
     return (
         <>
         <main style={boardPanel}>
-            
+
         </main>
         </>
     );

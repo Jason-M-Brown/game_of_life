@@ -1,4 +1,10 @@
 
+import PlayButton from "./PlayButton"
+import PauseButton from "./PauseButton"
+import ResetButton from "./ResetButton";
+import StepButton from "./StepButton";
+import GridSize from "./GridSize";
+
 const panelStyle : React.CSSProperties = {
     backgroundColor: "rgb(49, 12, 70)",
     position: "absolute",
@@ -14,7 +20,11 @@ function OptionsPanel() {
     return (
         <>
         <main style={panelStyle}>
-            
+            <PlayButton></PlayButton>
+            <PauseButton></PauseButton>
+            <StepButton></StepButton>
+            <GridSize></GridSize>
+            <ResetButton></ResetButton>
         </main>
         </>
     );
