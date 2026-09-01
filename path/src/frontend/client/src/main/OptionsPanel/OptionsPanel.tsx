@@ -1,9 +1,10 @@
+import {useState} from "react";
 
-import PlayButton from "./PlayButton"
-import PauseButton from "./PauseButton"
-import ResetButton from "./ResetButton";
-import StepButton from "./StepButton";
-import GridSize from "./GridSize";
+import PlayButton from "./Buttons/PlayButton"
+import PauseButton from "./Buttons/PauseButton"
+import ResetButton from "./Buttons/ResetButton";
+import StepButton from "./Buttons/StepButton";
+import GridSize from "./GridSize"
 
 const panelStyle : React.CSSProperties = {
     backgroundColor: "rgb(49, 12, 70)",
@@ -15,16 +16,35 @@ const panelStyle : React.CSSProperties = {
     boxSizing: "border-box",
 };
 
+type ActiveButton = "play" | "pause" | "step" | "reset" | null;
+
 function OptionsPanel() {
-    
+    const [activeButton, setActiveButton] = useState<ActiveButton>(null);
     return (
         <>
         <main style={panelStyle}>
-            <PlayButton></PlayButton>
-            <PauseButton></PauseButton>
-            <StepButton></StepButton>
-            <GridSize></GridSize>
-            <ResetButton></ResetButton>
+            <PlayButton
+                isActive={activeButton === "play"}
+                onActivate={() => setActiveButton("play")}
+            />
+
+            <PauseButton
+                isActive={activeButton === "pause"}
+                onActivate={() => setActiveButton("pause")}  
+            />
+
+            <StepButton
+                isActive={activeButton === "step"}
+                onActivate={() => setActiveButton("step")}
+            />
+
+
+
+            <ResetButton
+                isActive={activeButton === "reset"}
+                onActivate={() => setActiveButton("reset")}
+            />
+
         </main>
         </>
     );

@@ -9,7 +9,7 @@ export interface ToggleButtonProps {
     activeColor?: string;
 }
 
-const DEFAULT_BASE   = "rgb(255, 255, 255)";
+const DEFAULT_BASE   = "rgb(114, 52, 118)";
 const DEFAULT_HOVER  = "rgb(1, 255, 242)";
 const DEFAULT_ACTIVE = "rgb(237, 0, 0)";
 
