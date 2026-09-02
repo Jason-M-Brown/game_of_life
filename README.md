@@ -1,4 +1,4 @@
-# Conway's Game of Life
+# Conway's Game of Life (Completed)
 
 A TypeScript implementation of Conway's Game of Life, built with an emphasis on thorough, hand-verified unit and integration testing for the terminal-based MVP. The project evolved from a terminal-based MVP into a Node/Express backend with a React frontend.
 
