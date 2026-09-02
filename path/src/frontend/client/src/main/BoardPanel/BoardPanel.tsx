@@ -1,6 +1,8 @@
 interface BoardPanelProps {
     width: number;
     height: number;
+    liveCells: Set<number>;
+    onLiveCellsChange: (liveCells: Set<number>) => void;
 }
 
 const boardStyle: React.CSSProperties = {
@@ -8,12 +10,20 @@ const boardStyle: React.CSSProperties = {
     position: "absolute",
     right: "3%",
     top: "3%",
-    width: "50%",
+    width: "65%",
     height: "90%",
     boxSizing: "border-box",
 };
 
-function BoardPanel({ width, height }: BoardPanelProps) {
+const CELL_ALIVE_COLOR = "rgb(151, 39, 39)";
+const CELL_DEAD_COLOR = "rgb(111, 28, 141)";
+
+const cellStyle = (isAlive: boolean): React.CSSProperties => ({
+        backgroundColor: isAlive ? CELL_ALIVE_COLOR : CELL_DEAD_COLOR,
+        cursor: "pointer",
+});
+
+function BoardPanel({ width, height, liveCells, onLiveCellsChange }: BoardPanelProps) {
     const gridStyle: React.CSSProperties = {
         display: "grid",
         gridTemplateColumns: `repeat(${width}, 1fr)`,
@@ -25,20 +35,30 @@ function BoardPanel({ width, height }: BoardPanelProps) {
         boxSizing: "border-box",
     };
 
-    const cellStyle: React.CSSProperties = {
-        backgroundColor: "rgb(103, 18, 134)",
+    const toggleCell = (index: number) => {
+        const next = new Set(liveCells);
+        if (next.has(index)) {
+            next.delete(index);
+        } else {
+            next.add(index);
+        }
+        onLiveCellsChange(next);
     };
 
     const totalCells = width * height;
 
     return (
-        <main style={boardStyle}>
-            <div style={gridStyle}>
-                {Array.from({ length: totalCells }).map((_, index) => (
-                    <div key={index} style={cellStyle} />
-                ))}
-            </div>
-        </main>
+    <main style={boardStyle}>
+        <div style={gridStyle}>
+            {Array.from({ length: totalCells }).map((_, index) => (
+                <div
+                    key={index}
+                    onClick={() => toggleCell(index)}
+                    style={cellStyle(liveCells.has(index))}
+                />
+            ))}
+        </div>
+    </main>
     );
 }
 

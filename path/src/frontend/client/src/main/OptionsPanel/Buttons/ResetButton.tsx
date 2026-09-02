@@ -1,19 +1,22 @@
-import MomentButton from "../interface/MomentButton"
+import MomentButton from "../interface/MomentButton";
 
-
-
-//TO DO: Attach what to do when clicked here
-async function callResetBackend() {
-
+interface ResetButtonProps {
+    liveCells: Set<number>;
+    onLiveCellsChange: (liveCells: Set<number>) => void;
 }
 
-function ResetButton() {
-    return (
-        <MomentButton 
-        label="Reset" 
-        onTrigger={callResetBackend} 
-        />
-    );
-};
+// Backend hookup placeholder — not implemented yet
+async function callResetBackend(liveCells: Set<number>) {
+    // TODO: notify backend of reset
+}
 
-export default ResetButton
+function ResetButton({ liveCells, onLiveCellsChange }: ResetButtonProps) {
+    const handleReset = () => {
+        callResetBackend(liveCells);
+        onLiveCellsChange(new Set());
+    };
+
+    return <MomentButton label="Reset" onTrigger={handleReset} />;
+}
+
+export default ResetButton;

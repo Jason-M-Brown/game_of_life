@@ -10,6 +10,7 @@ function Main() {
 
     const [gridWidth, setGridWidth] = useState(MIN_SIZE);
     const [gridHeight, setGridHeight] = useState(MIN_SIZE);
+    const [liveCells, setLiveCells] = useState<Set<number>>(new Set());
 
     return (
         <main className="main">
@@ -18,10 +19,14 @@ function Main() {
                 gridHeight={gridHeight}
                 onGridWidthChange={setGridWidth}
                 onGridHeightChange={setGridHeight}
+                liveCells={liveCells}
+                onLiveCellsChange={setLiveCells}
             />
             <BoardPanel
                 width={gridWidth}
                 height={gridHeight}
+                liveCells={liveCells}
+                onLiveCellsChange={setLiveCells}
             />
         </main>
     );

@@ -12,6 +12,8 @@ interface OptionsPanelProps {
     gridHeight: number;
     onGridWidthChange: (width: number) => void;
     onGridHeightChange: (height: number) => void;
+    liveCells: Set<number>;
+    onLiveCellsChange: (liveCells: Set<number>) => void;
 }
 
 const panelStyle : React.CSSProperties = {
@@ -31,6 +33,8 @@ function OptionsPanel({
     gridHeight,
     onGridWidthChange,
     onGridHeightChange,
+    liveCells,
+    onLiveCellsChange,
     }: OptionsPanelProps) {
 
     const [activeButton, setActiveButton] = useState<ActiveButton>(null);
@@ -40,14 +44,17 @@ function OptionsPanel({
             <PlayButton
                 isActive={activeButton === "play"}
                 onActivate={() => setActiveButton("play")}
+                liveCells={liveCells}
+
             />
 
             <PauseButton
                 isActive={activeButton === "pause"}
                 onActivate={() => setActiveButton("pause")}  
+                liveCells={liveCells}
             />
 
-            <StepButton/>
+            <StepButton liveCells={liveCells}/>
 
 
             <GridSize
@@ -58,7 +65,7 @@ function OptionsPanel({
             />
 
             <div style={{ marginTop: "auto"}}>
-                <ResetButton />
+                <ResetButton liveCells={liveCells} onLiveCellsChange={onLiveCellsChange} />
             </div>
 
 

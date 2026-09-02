@@ -1,18 +1,18 @@
-import MomentButton from "../interface/MomentButton"
+import MomentButton from "../interface/MomentButton";
 
-
-//TO DO: Attach what to do when clicked here
-async function callStepBackend() {
-
+interface StepButtonProps {
+    liveCells: Set<number>;
 }
 
-function StepButton() {   
-    return (
-        <MomentButton
-        label="Step" 
-        onTrigger={callStepBackend} 
-        />
-    );
-};
+// Backend hookup placeholder — not implemented yet
+async function callStepBackend(liveCells: Set<number>) {
+    // TODO: POST liveCells to backend to advance one generation
+}
 
-export default StepButton
+function StepButton({ liveCells }: StepButtonProps) {
+    return (
+        <MomentButton label="Step" onTrigger={() => callStepBackend(liveCells)} />
+    );
+}
+
+export default StepButton;
