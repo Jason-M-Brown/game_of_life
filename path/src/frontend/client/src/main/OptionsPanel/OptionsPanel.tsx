@@ -19,7 +19,7 @@ const panelStyle : React.CSSProperties = {
     position: "absolute",
     left: "3%",
     top: "3%",
-    width: "28%",
+    width: "20%",
     height: "90%",
     boxSizing: "border-box",
     display: "flex",

@@ -6,14 +6,14 @@ interface PauseButtonProps {
 }
 
 //TO DO: Attach what to do when clicked here
-async function callPlayBackend() {
+async function callPauseBackend() {
 
 }
 
 function PauseButton({isActive, onActivate}: PauseButtonProps) {
     const handleClick = () => {
         onActivate();
-        callPlayBackend();
+        callPauseBackend();
     };
     
     

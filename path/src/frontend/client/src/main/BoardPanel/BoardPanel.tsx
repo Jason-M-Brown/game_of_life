@@ -8,7 +8,7 @@ const boardStyle: React.CSSProperties = {
     position: "absolute",
     right: "3%",
     top: "3%",
-    width: "65%",
+    width: "50%",
     height: "90%",
     boxSizing: "border-box",
 };
@@ -26,7 +26,7 @@ function BoardPanel({ width, height }: BoardPanelProps) {
     };
 
     const cellStyle: React.CSSProperties = {
-        backgroundColor: "rgb(54, 28, 141)",
+        backgroundColor: "rgb(103, 18, 134)",
     };
 
     const totalCells = width * height;
