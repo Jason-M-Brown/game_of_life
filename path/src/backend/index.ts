@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import gameRouter from "./routers/gameRouter.js";
-import patternRouter from "./routers/patternRouter.js"
+import gameRouter from "./routers/boardRouter.js";
+//import patternRouter from "./routers/patternRouter.js"
 
 
 const app = express();
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/board", gameRouter);
-app.use("/api/patterns", patternRouter);
+//app.use("/api/patterns", patternRouter);
 
 app.get("/health", (req, res) => {
   res.json({status: "ok"});

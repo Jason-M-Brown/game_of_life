@@ -7,8 +7,9 @@ interface PlayButtonProps {
 }
 
 //TO DO: Attach what to do when clicked here
-async function callPlayBackend(liveCells: Set<number>) {
+async function callPlayBackend(liveCells: Set<number>): Promise<Set<number>> {
 
+    return liveCells;
 }
 
 function PlayButton({isActive, onActivate, liveCells}: PlayButtonProps) {

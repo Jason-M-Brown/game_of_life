@@ -54,7 +54,12 @@ function OptionsPanel({
                 liveCells={liveCells}
             />
 
-            <StepButton liveCells={liveCells}/>
+            <StepButton 
+                liveCells={liveCells}
+                onLiveCellsChange={onLiveCellsChange}
+                width={gridWidth}
+                height={gridHeight}
+                />
 
 
             <GridSize

@@ -7,8 +7,8 @@ interface PauseButtonProps {
 }
 
 //TO DO: Attach what to do when clicked here
-async function callPauseBackend(liveCells: Set<number>) {
-
+async function callPauseBackend(liveCells: Set<number>): Promise<Set<number>> {
+    return liveCells
 }
 
 function PauseButton({isActive, onActivate, liveCells}: PauseButtonProps) {

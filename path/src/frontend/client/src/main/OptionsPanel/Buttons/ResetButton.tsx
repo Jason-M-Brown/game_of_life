@@ -6,8 +6,9 @@ interface ResetButtonProps {
 }
 
 // Backend hookup placeholder — not implemented yet
-async function callResetBackend(liveCells: Set<number>) {
+async function callResetBackend(liveCells: Set<number>): Promise<Set<number>> {
     // TODO: notify backend of reset
+    return liveCells;
 }
 
 function ResetButton({ liveCells, onLiveCellsChange }: ResetButtonProps) {
