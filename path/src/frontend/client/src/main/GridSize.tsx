@@ -1,4 +1,3 @@
-
 interface GridSizeProps {
     width: number;
     height: number;
@@ -6,9 +5,7 @@ interface GridSizeProps {
     onHeightChange: (height: number) => void;
 }
 
-
 const MIN_SIZE = 1;
-
 
 const rowStyle: React.CSSProperties = {
     color: "white",
@@ -17,7 +14,6 @@ const rowStyle: React.CSSProperties = {
     alignItems: "center",
     width: "95%",
     margin: "5px 5px",
-    
 };
 
 const inputStyle: React.CSSProperties = {
@@ -31,34 +27,27 @@ function clampToMin(value: number): number {
 }
 
 function GridSize({
-    width, 
-    height,
+    width,
     onWidthChange,
     onHeightChange }: GridSizeProps) {
 
+    const handleSizeChange = (value: number) => {
+        const size = clampToMin(value);
+        onWidthChange(size);
+        onHeightChange(size);
+    };
+
     return (
-        <>
-            <label style={rowStyle}>
-                Set Width
-                <input
-                    type="number"
-                    min={MIN_SIZE}
-                    value={width}
-                    style={inputStyle}
-                    onChange={(e) => onWidthChange(clampToMin(Number(e.target.value)))}
-                />
-            </label>
-            <label style={rowStyle}>
-                Set Height
-                <input
-                    type="number"
-                    min={MIN_SIZE}
-                    value={height}
-                    style={inputStyle}
-                    onChange={(e) => onHeightChange(clampToMin(Number(e.target.value)))}
-                />
-            </label>
-        </>
+        <label style={rowStyle}>
+            Set Size
+            <input
+                type="number"
+                min={MIN_SIZE}
+                value={width}
+                style={inputStyle}
+                onChange={(e) => handleSizeChange(Number(e.target.value))}
+            />
+        </label>
     );
 };
 
