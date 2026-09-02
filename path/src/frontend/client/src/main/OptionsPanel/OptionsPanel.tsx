@@ -1,12 +1,13 @@
-import {useState} from "react";
+import { useState, useRef, useEffect } from "react";
 
 import PlayButton from "./Buttons/PlayButton"
 import PauseButton from "./Buttons/PauseButton"
 import ResetButton from "./Buttons/ResetButton";
 import StepButton from "./Buttons/StepButton";
 import GridSize from "../GridSize"
+import { fetchNextGeneration } from "../../api/board";
 
-type ActiveButton = "play" | "pause" |  null;
+type ActiveButton = "play" | "pause" | null;
 interface OptionsPanelProps {
     gridWidth: number;
     gridHeight: number;
@@ -16,7 +17,7 @@ interface OptionsPanelProps {
     onLiveCellsChange: (liveCells: Set<number>) => void;
 }
 
-const panelStyle : React.CSSProperties = {
+const panelStyle: React.CSSProperties = {
     backgroundColor: "rgb(49, 12, 70)",
     position: "absolute",
     left: "3%",
@@ -35,32 +36,76 @@ function OptionsPanel({
     onGridHeightChange,
     liveCells,
     onLiveCellsChange,
-    }: OptionsPanelProps) {
+}: OptionsPanelProps) {
 
     const [activeButton, setActiveButton] = useState<ActiveButton>(null);
+    const intervalRef = useRef<number | null>(null);
+
+    // always reflect the latest values, so the interval tick never reads stale state
+    const liveCellsRef = useRef(liveCells);
+    const dimensionsRef = useRef({ width: gridWidth, height: gridHeight });
+
+    useEffect(() => {
+        liveCellsRef.current = liveCells;
+        dimensionsRef.current = { width: gridWidth, height: gridHeight };
+    }, [liveCells, gridWidth, gridHeight]);
+
+    const stopPlaying = () => {
+        if (intervalRef.current !== null) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    };
+
+    const handlePlay = () => {
+        if (intervalRef.current !== null) return; // already running
+        setActiveButton("play");
+        intervalRef.current = window.setInterval(async () => {
+            const { width, height } = dimensionsRef.current;
+            const next = await fetchNextGeneration(liveCellsRef.current, width, height);
+            onLiveCellsChange(next);
+        }, 500); // adjust generation speed here
+    };
+
+    const handlePause = () => {
+        stopPlaying();
+        setActiveButton("pause");
+    };
+
+    const handleBeforeStep = () => {
+        if (activeButton === "play") {
+            stopPlaying();
+            setActiveButton(null);
+        }
+        // StepButton's own handleStep runs right after this, doing the "one last generation"
+    };
+
+    const handleBeforeReset = () => {
+        stopPlaying();
+        setActiveButton(null);
+    };
+
+    useEffect(() => stopPlaying, []); // clear interval if the panel unmounts mid-play
 
     return (
         <main style={panelStyle}>
             <PlayButton
                 isActive={activeButton === "play"}
-                onActivate={() => setActiveButton("play")}
-                liveCells={liveCells}
-
+                onActivate={handlePlay}
             />
 
             <PauseButton
                 isActive={activeButton === "pause"}
-                onActivate={() => setActiveButton("pause")}  
-                liveCells={liveCells}
+                onActivate={handlePause}
             />
 
-            <StepButton 
+            <StepButton
                 liveCells={liveCells}
                 onLiveCellsChange={onLiveCellsChange}
                 width={gridWidth}
                 height={gridHeight}
-                />
-
+                onBeforeStep={handleBeforeStep}
+            />
 
             <GridSize
                 width={gridWidth}
@@ -69,11 +114,13 @@ function OptionsPanel({
                 onHeightChange={onGridHeightChange}
             />
 
-            <div style={{ marginTop: "auto"}}>
-                <ResetButton liveCells={liveCells} onLiveCellsChange={onLiveCellsChange} />
+            <div style={{ marginTop: "auto" }}>
+                <ResetButton
+                    liveCells={liveCells}
+                    onLiveCellsChange={onLiveCellsChange}
+                    onBeforeReset={handleBeforeReset}
+                />
             </div>
-
-
         </main>
     );
 };

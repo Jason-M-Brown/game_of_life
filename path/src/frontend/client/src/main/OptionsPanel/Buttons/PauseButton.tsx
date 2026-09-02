@@ -3,27 +3,15 @@ import ToggleButton from "../interface/ToggleButton"
 interface PauseButtonProps {
     isActive: boolean;
     onActivate: () => void;
-    liveCells: Set<number>;
 }
 
-//TO DO: Attach what to do when clicked here
-async function callPauseBackend(liveCells: Set<number>): Promise<Set<number>> {
-    return liveCells
-}
-
-function PauseButton({isActive, onActivate, liveCells}: PauseButtonProps) {
-    const handleClick = () => {
-        onActivate();
-        callPauseBackend(liveCells);
-    };
-    
-    
+function PauseButton({ isActive, onActivate }: PauseButtonProps) {
     return (
-        <ToggleButton 
-            lable="Pause" 
+        <ToggleButton
+            lable="Pause"
             isActive={isActive}
-            onActivate={handleClick}
-            />
+            onActivate={onActivate}
+        />
     );
 };
 
