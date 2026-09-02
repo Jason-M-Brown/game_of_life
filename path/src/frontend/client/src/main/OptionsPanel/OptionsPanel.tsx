@@ -22,6 +22,8 @@ const panelStyle : React.CSSProperties = {
     width: "28%",
     height: "90%",
     boxSizing: "border-box",
+    display: "flex",
+    flexDirection: "column",
 };
 
 function OptionsPanel({
@@ -47,6 +49,7 @@ function OptionsPanel({
 
             <StepButton/>
 
+
             <GridSize
                 width={gridWidth}
                 height={gridHeight}
@@ -54,9 +57,9 @@ function OptionsPanel({
                 onHeightChange={onGridHeightChange}
             />
 
-            
-
-            <ResetButton/>
+            <div style={{ marginTop: "auto"}}>
+                <ResetButton />
+            </div>
 
 
         </main>

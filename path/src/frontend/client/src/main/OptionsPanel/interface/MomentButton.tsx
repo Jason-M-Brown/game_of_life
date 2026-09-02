@@ -39,27 +39,20 @@ function MomentaryButton({
         //Style Box
         backgroundColor,
         width: "95%",
-        height: "10%",
         boxSizing: "border-box",
         display: "flex",
 
-
-        //Style Text
         color: "white",
 
-        //Location
         justifyContent: "center",
-        flexDirection: "column",
+        alignItems: "center",
         gap: "8px",
-        margin: "3%",
+        padding: "10px 16px",
+        margin: "5px 3%",
         cursor: "pointer",
 
-
-
-        //Transition
         transition: "background-color 0.20s ease-in-out",
-
-    };
+        };
 
     return (
         <button
